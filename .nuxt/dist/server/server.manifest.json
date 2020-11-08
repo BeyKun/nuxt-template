@@ -1,0 +1,37 @@
+{
+  "entry": "server.js",
+  "files": {
+    "pages/admin/beranda.js": "pages/admin/beranda.js",
+    "pages/admin/berita.js": "pages/admin/berita.js",
+    "pages/admin/informasi.js": "pages/admin/informasi.js",
+    "pages/admin/kegiatan.js": "pages/admin/kegiatan.js",
+    "pages/admin/lapor/detail.js": "pages/admin/lapor/detail.js",
+    "pages/admin/lapor/index.js": "pages/admin/lapor/index.js",
+    "pages/admin/master/pemda.js": "pages/admin/master/pemda.js",
+    "pages/admin/master/setting.js": "pages/admin/master/setting.js",
+    "pages/admin/users.js": "pages/admin/users.js",
+    "pages/index.js": "pages/index.js",
+    "pages/login.js": "pages/login.js",
+    "pages/profile.js": "pages/profile.js",
+    "pages/register.js": "pages/register.js",
+    "pages/reset-password.js": "pages/reset-password.js",
+    "server.js": "server.js"
+  },
+  "maps": {
+    "pages/admin/beranda.js": "pages/admin/beranda.js.map",
+    "pages/admin/berita.js": "pages/admin/berita.js.map",
+    "pages/admin/informasi.js": "pages/admin/informasi.js.map",
+    "pages/admin/kegiatan.js": "pages/admin/kegiatan.js.map",
+    "pages/admin/lapor/detail.js": "pages/admin/lapor/detail.js.map",
+    "pages/admin/lapor/index.js": "pages/admin/lapor/index.js.map",
+    "pages/admin/master/pemda.js": "pages/admin/master/pemda.js.map",
+    "pages/admin/master/setting.js": "pages/admin/master/setting.js.map",
+    "pages/admin/users.js": "pages/admin/users.js.map",
+    "pages/index.js": "pages/index.js.map",
+    "pages/login.js": "pages/login.js.map",
+    "pages/profile.js": "pages/profile.js.map",
+    "pages/register.js": "pages/register.js.map",
+    "pages/reset-password.js": "pages/reset-password.js.map",
+    "server.js": "server.js.map"
+  }
+}

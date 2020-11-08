@@ -1,4 +1,4 @@
-$primary: #004689;
+$primary: #1771c5;
 $success: #67C23A;
 $warning: #E6A23C;
 $danger: #F56C6C;
@@ -92,7 +92,7 @@ body {
   height: 60px;
   bottom: 40px;
   right: 40px;
-  background-color: $danger;
+  background-color: $primary;
   color: white !important;
   border-radius: 50px;
   text-align: center;
@@ -219,24 +219,34 @@ hr {
 }
 
 .el-button--primary, .el-pagination.is-background .el-pager li:not(.disabled).active {
-  background-color: $danger;
-  border-color: $danger;
+  background-color: $primary;
+  border-color: $primary;
 }
 .el-table td, .el-table th {
   padding: 5px;
 }
 .el-tabs__active-bar {
-  background-color: $danger;
+  background-color: $primary;
 }
 .el-tabs__item.is-active, .el-link.el-link--primary {
-  color: $danger !important;
+  color: $primary !important;
 }
 .el-tabs__item:hover  {
-  color: $danger;
+  color: $primary;
 }
 *:focus {
   outline: none !important;
 }
 .vs-card__group .vs-card__group-cards {
   overflow-x: hidden !important;
+}
+.navbar-vertical .navbar-brand-img, .navbar-vertical .navbar-brand>img {
+  max-height: 4rem;
+  margin-left: 40px;
+  margin-top:15px
+}
+
+td, th {
+  width: 1px;
+  white-space: nowrap;
 }

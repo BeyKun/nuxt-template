@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header bg-danger pb-6">
+    <div class="header bg-primary pb-6">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
@@ -13,15 +13,15 @@
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0"><i class="las la-book-reader"></i> Laporan
                       </h5>
-                      <span class="h2 font-weight-bold mb-0">{{numberWithCommas(summary.learning_hours.current)}}
+                      <span class="h2 font-weight-bold mb-0">{{numberWithCommas(summary.laporan.current)}}
                       </span>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
                     <span
-                      :class="{'text-precentage': true, 'text-success': summary.learning_hours.type == 'up', 'text-danger': summary.learning_hours.type == 'down', 'mr-2': true}"><i
-                        :class="{'las': true, 'la-angle-double-up': summary.learning_hours.type == 'up', 'la-angle-double-down': summary.learning_hours.type == 'down'}"></i>
-                      <b>{{summary.learning_hours.precentage}}%</b></span>
+                      :class="{'text-precentage': true, 'text-success': summary.laporan.type == 'up', 'text-primary': summary.laporan.type == 'down', 'mr-2': true}"><i
+                        :class="{'las': true, 'la-angle-double-up': summary.laporan.type == 'up', 'la-angle-double-down': summary.laporan.type == 'down'}"></i>
+                      <b>{{summary.laporan.precentage}}%</b></span>
                     <span class="text-nowrap">Dari bulan lalu</span>
                   </p>
                 </div>
@@ -35,15 +35,15 @@
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0"><i class="las la-chalkboard-teacher"></i>
                         Kegiatan</h5>
-                      <span class="h2 font-weight-bold mb-0">{{numberWithCommas(summary.sharing_hours.current)}}
+                      <span class="h2 font-weight-bold mb-0">{{numberWithCommas(summary.kegiatan.current)}}
                       </span>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
                     <span
-                      :class="{'text-precentage': true, 'text-success': summary.sharing_hours.type == 'up', 'text-danger': summary.sharing_hours.type == 'down', 'mr-2': true}"><i
-                        :class="{'las': true, 'la-angle-double-up': summary.sharing_hours.type == 'up', 'la-angle-double-down': summary.sharing_hours.type == 'down'}"></i>
-                      <b>{{summary.sharing_hours.precentage}}%</b></span>
+                      :class="{'text-precentage': true, 'text-success': summary.kegiatan.type == 'up', 'text-primary': summary.kegiatan.type == 'down', 'mr-2': true}"><i
+                        :class="{'las': true, 'la-angle-double-up': summary.kegiatan.type == 'up', 'la-angle-double-down': summary.kegiatan.type == 'down'}"></i>
+                      <b>{{summary.kegiatan.precentage}}%</b></span>
                     <span class="text-nowrap">Dari bulan lalu</span>
                   </p>
                 </div>
@@ -56,14 +56,14 @@
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0"><i class="las la-coins"></i> Berita</h5>
-                      <span class="h2 font-weight-bold mb-0">{{numberWithCommas(summary.point.current)}}</span>
+                      <span class="h2 font-weight-bold mb-0">{{numberWithCommas(summary.berita.current)}}</span>
                     </div>
                   </div>
                   <p class="mt-3 mb-0 text-sm">
                     <span
-                      :class="{'text-precentage': true, 'text-success': summary.point.type == 'up', 'text-danger': summary.point.type == 'down', 'mr-2': true}"><i
-                        :class="{'las': true, 'la-angle-double-up': summary.point.type == 'up', 'la-angle-double-down': summary.point.type == 'down'}"></i>
-                      <b>{{summary.point.precentage}}%</b></span>
+                      :class="{'text-precentage': true, 'text-success': summary.berita.type == 'up', 'text-primary': summary.berita.type == 'down', 'mr-2': true}"><i
+                        :class="{'las': true, 'la-angle-double-up': summary.berita.type == 'up', 'la-angle-double-down': summary.berita.type == 'down'}"></i>
+                      <b>{{summary.berita.precentage}}%</b></span>
                     <span class="text-nowrap">Dari bulan lalu</span>
                   </p>
                 </div>
@@ -76,19 +76,6 @@
     <!-- Page content -->
     <div class="container-fluid mt--6">
 
-
-      <div class="row">
-        <div class="col-md-6">
-          <!-- <ChartPieCoursesByType /> -->
-        </div>
-
-        <div class="col-md-6">
-          <!-- <ChartPieCoursesByCategory /> -->
-        </div>
-
-      </div>
-
-
       <!-- popular couses -->
       <div class="row">
         <div class="col-xl-6">
@@ -98,24 +85,24 @@
               <!-- Title -->
               <h5 class="h3 mb-0">Berita Populer</h5>
             </div>
-              <el-table :data="popularCourses" stripe v-loading="loadingPopularCourses">
-                <el-table-column type="index" width="50" align="center">
-                </el-table-column>
-                <el-table-column label="Judul Berita">
-                  <template slot-scope="scope">
-                    <el-tooltip class="item" effect="dark" :content="scope.row.title" placement="top">
-                      <!-- <router-link :to="`/admin/pembelajaran/kursus/view?id=${scope.row.id}`"> -->
-                        <el-link type="primary" class="text-truncate">{{scope.row.title}}</el-link>
-                      <!-- </router-link> -->
-                    </el-tooltip>
-                  </template>
-                </el-table-column>
-                <el-table-column label="Dibaca" width="130" align="center">
-                  <template slot-scope="scope">
-                    {{scope.row.total_completed}}
-                  </template>
-                </el-table-column>
-              </el-table>
+            <el-table :data="beritaPopuler" stripe v-loading="loadingBeritaPopuler">
+              <el-table-column type="index" width="50" align="center">
+              </el-table-column>
+              <el-table-column label="Judul Berita">
+                <template slot-scope="scope">
+                  <el-tooltip class="item" effect="dark" :content="scope.row.judul" placement="top">
+                    <!-- <router-link :to="`/admin/pembelajaran/kursus/view?id=${scope.row.id}`"> -->
+                    <el-link type="primary" class="text-truncate">{{truncateString(scope.row.judul, 50)}}</el-link>
+                    <!-- </router-link> -->
+                  </el-tooltip>
+                </template>
+              </el-table-column>
+              <el-table-column label="Dibaca" width="130" align="center">
+                <template slot-scope="scope">
+                  {{scope.row.total}}
+                </template>
+              </el-table-column>
+            </el-table>
           </el-card>
         </div>
         <div class="col-xl-6">
@@ -132,20 +119,36 @@
         </div>
       </div>
 
-      <div class="row">
-          <div class="col-md-12">
-              <el-card style="margin-top:20px">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <ChartLine />
-                    </div>
-                    <div class="col-md-6">
-                      <ChartBar />
-                    </div>
-                  </div>
-              </el-card>
-          </div>
-      </div>
+      <!-- <div class="row">
+        <div class="col-md-12 text-center" style="margin-top:20px">
+          <label><b>Pemerintah Daerah</b></label>
+          <el-select filterable v-model="selectKementrian" placeholder="Pilih Pemda" style="width:100%">
+            <el-option v-for="item in kemementrian" :key="item.id" :label="item.judul" :value="item.judul"
+              style="height:60px">
+              <div class="row">
+                <div class="col-2">
+                  <span style="float: left"><img :src="item.url" height="50" width="auto" alt=""></span>
+                </div>
+                <div class="col-10">
+                  <span>{{ item.judul }}</span>
+                </div>
+              </div>
+            </el-option>
+          </el-select>
+        </div>
+        <div class="col-md-12">
+          <el-card style="margin-top:20px">
+            <div class="row">
+              <div class="col-md-6">
+                <ChartLine />
+              </div>
+              <div class="col-md-6">
+                <ChartBar />
+              </div>
+            </div>
+          </el-card>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -163,71 +166,40 @@
     layout: 'admin',
     data() {
       return {
+        selectKementrian: '',
+        kemementrian: [],
         summary: {
-          point: {
-            type: "up",
-            current: 425,
-            previous: 0,
-            precentage: 12
-          },
-          learning_hours: {
-            type: "up",
-            current: 674,
-            previous: 34,
-            precentage: 0
-          },
-          sharing_hours: {
-            type: "up",
-            current: 724,
-            previous: 0,
-            precentage: 23
-          },
-          course_completed: {
+          laporan: {
             type: "up",
             current: 0,
             previous: 0,
             precentage: 0
-          }
+          },
+          kegiatan: {
+            type: "up",
+            current: 0,
+            previous: 0,
+            precentage: 0
+          },
+          berita: {
+            type: "up",
+            current: 0,
+            previous: 0,
+            precentage: 0
+          },
         },
-        topUsers: [],
-        popularCourses: [
-            {
-                title: 'Lorem ipsum dolor set amet',
-                total_completed: 235
-            },
-            {
-                title: 'Lorem ipsum dolor set amet',
-                total_completed: 235
-            },
-            {
-                title: 'Lorem ipsum dolor set amet',
-                total_completed: 235
-            },
-            {
-                title: 'Lorem ipsum dolor set amet',
-                total_completed: 235
-            },
-            {
-                title: 'Lorem ipsum dolor set amet',
-                total_completed: 235
-            },
-            {
-                title: 'Lorem ipsum dolor set amet',
-                total_completed: 235
-            },
-        ],
-        loadingTopUsers: false,
-        loadingPopularCourses: false
+        beritaPopuler: [],
+        loadingBeritaPopuler: true,
       }
     },
     mounted() {
-      // this.getSummary();
-      // this.getTopUsers()
+      this.getSummary()
+      this.getBeritaPopuler()
       // this.getPopularCourses()
     },
     methods: {
       async getSummary() {
-        await this.$axios.get('/admin/summary').then(response => {
+        await this.$axios.get('/summary').then(response => {
           if (response.data.success) {
             this.summary = response.data.data
           }
@@ -235,25 +207,15 @@
           console.log(e)
         })
       },
-      async getTopUsers() {
-        await this.$axios.get('/topusers').then(response => {
+      async getBeritaPopuler() {
+        await this.$axios.get('/berita-populer').then(response => {
           if (response.data.success) {
-            this.topUsers = response.data.data
+            this.beritaPopuler = response.data.data
           }
         }).finally(() => {
-          this.loadingTopUsers = false
+          this.loadingBeritaPopuler = false
         })
       },
-      async getPopularCourses() {
-        this.loadingPopularCourses = true;
-        await this.$axios.get('/popularcourses').then(response => {
-          if (response.data.success) {
-            this.popularCourses = response.data.data
-          }
-        }).finally(() => {
-          this.loadingPopularCourses = false
-        })
-      }
     },
   }
 

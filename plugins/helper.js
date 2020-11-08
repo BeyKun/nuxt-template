@@ -12,10 +12,11 @@ Vue.mixin({
         showErrorField(data) {
             Object.keys(data).forEach((v, k) => {
                 setTimeout(() => {
-                    this.$notify.error({
-                        title: this.humanize(v),
-                        message: data[v]
-                    });
+                    // this.$notify.error({
+                    //     title: this.humanize(v),
+                    //     message: data[v]
+                    // });
+                    this.openNotification('top-right', 'danger', `<i class='bx bxs-error-circle'></i>`, this.humanize(v), data[v])
                 }, 500)
             });
         },
@@ -47,6 +48,36 @@ Vue.mixin({
             let today = new Date();
             let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             return date;
-        }
+        },
+        openNotification(position = null, color, icon, title, message) {
+            const noti = this.$vs.notification({
+              icon,
+              color,
+              position,
+              title: title,
+              text: message
+            })
+        },
+        truncateString(str, num) {
+            if (str.length > num) {
+              return str.slice(0, num) + "...";
+            } else {
+              return str;
+            }
+        },
+        downloadFile(url){
+            this.$axios.get(url).then(resp => {
+              if(resp.data.success){
+                window.open(resp.data.data.file_name, '_blank')
+              }
+            }).catch(err => {
+              this.$notify.error({
+                    title: 'Error',
+                    message: 'File Evidence tidak ditemukan'
+                  })
+            }).finally(() => {
+              //
+            })
+          }
     }
 });

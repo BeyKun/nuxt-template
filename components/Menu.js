@@ -3,68 +3,68 @@ export const  menu = () => {
     return [
         {
             text: 'Dashboard',
-            icon: 'ni ni-shop text-danger',
+            icon: 'ni ni-shop text-primary',
             route: '/admin/beranda',
         },
         {
             text: 'Lapor',
-            icon: 'el-icon-notebook-1 text-danger',
+            icon: 'el-icon-notebook-1 text-primary',
             route: '/admin/lapor'
         },
         {
             text: 'Kagiatan',
-            icon: 'el-icon-baseball text-danger',
+            icon: 'el-icon-baseball text-primary',
             route: '/admin/kegiatan'
         },
         {
             text: 'Berita',
-            icon: 'el-icon-tickets text-danger',
+            icon: 'el-icon-tickets text-primary',
             route: '/admin/berita'
         },
         {
             text: 'Informasi',
-            icon: 'el-icon-info text-danger',
+            icon: 'el-icon-info text-primary',
             route: '/admin/informasi'
         },
         {
             text: 'Users',
-            icon: 'el-icon-user text-danger',
+            icon: 'el-icon-user text-primary',
             route: '/admin/users'
         },
-        // {
-        //     text: 'Master',
-        //     icon: 'el-icon-folder text-danger',
-        //     children: [
-        //         {
-        //             text: "Voucher",
-        //             icon: 'el-icon-postcard',
-        //             route: '/admin/master/voucher'
-        //         },
-        //         {
-        //             text: "Announcements",
-        //             icon: 'el-icon-s-promotion',
-        //             route: '/admin/master/announcements'
-        //         },
-        //         {
-        //             text: "Bookstores",
-        //             icon: 'el-icon-notebook-1',
-        //             route: '/admin/master/bookstores'
-        //         },
-        //         {
-        //             text: "Claim Category",
-        //             icon: 'el-icon-tickets',
-        //             route: '/admin/master/claim_category'
-        //         },
-        //         {
-        //             text: "Skill",
-        //             icon: 'el-icon-medal',
-        //             route: '/admin/master/kemampuan'
-        //         },
-        //     ]
-        // },
+        {
+            text: 'Master',
+            icon: 'el-icon-folder text-primary',
+            children: [
+                {
+                    text: "Pemda",
+                    icon: 'el-icon-postcard',
+                    route: '/admin/master/pemda'
+                },
+                // {
+                //     text: "Setting",
+                //     icon: 'el-icon-setting',
+                //     route: '/admin/master/setting'
+                // },
+                // {
+                //     text: "Bookstores",
+                //     icon: 'el-icon-notebook-1',
+                //     route: '/admin/master/bookstores'
+                // },
+                // {
+                //     text: "Claim Category",
+                //     icon: 'el-icon-tickets',
+                //     route: '/admin/master/claim_category'
+                // },
+                // {
+                //     text: "Skill",
+                //     icon: 'el-icon-medal',
+                //     route: '/admin/master/kemampuan'
+                // },
+            ]
+        },
         // {
         //     text: 'Setting',
-        //     icon: 'el-icon-setting text-danger',
+        //     icon: 'el-icon-setting text-primary',
         //     children: [
         //         {
         //             text: 'Point',

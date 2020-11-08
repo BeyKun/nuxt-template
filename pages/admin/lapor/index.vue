@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header bg-danger pb-6" style="z-index:-1">
+    <div class="header bg-primary pb-6" style="z-index:-1">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
@@ -8,249 +8,415 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid mt--5">
-      <el-card>
+    <div class="container-fluid mt--7">
+      <div class="row">
+        <div class="col-md-12">
+          <vs-button warn style="float:right" gradient>Download PDF</vs-button>
+          &nbsp;
+          <vs-button success style="float:right" gradient>Download Excel</vs-button>
+        </div>
+      </div>
+      <el-card v-loading="getLoader">
         <div class="row" style="margin-bottom:20px">
-          <div class="col-md-5">
+          <div class="col-md-4">
             <el-date-picker size="mini" type="daterange" range-separator="-" start-placeholder="Start date"
-              end-placeholder="End date">
+              end-placeholder="End date" style="width:100%">
             </el-date-picker>
           </div>
-          <div class="col-md-3 offset-md-4">
-            <el-input placeholder="Cari" size="mini">
+          <div class="col-md-4">
+            <!-- <el-select size="mini" filterable v-model="selectKementrian" placeholder="Pilih Pemda" style="width:100%">
+              <el-option v-for="item in kemementrian" :key="item.id" :label="item.judul" :value="item.judul"
+                style="height:60px">
+                <div class="row">
+                  <div class="col-2">
+                    <span style="float: left"><img :src="item.url" height="50" width="auto" alt=""></span>
+                  </div>
+                  <div class="col-10">
+                    <span>{{ item.judul }}</span>
+                  </div>
+                </div>
+              </el-option>
+            </el-select> -->
+          </div>
+          <div class="col-md-4">
+            <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
               <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
           </div>
         </div>
-        <el-table :data="tableData" style="width: 100%" v-loading="loading">
-          <el-table-column label="Judul">
-            <template slot-scope="scope">
-              <router-link to="/admin/lapor/detail">
-              <p
-                style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap; cursor: pointer; color: #004689; font-weight: 500; font-size: 14px;padding-top: 14px;">
-                {{ scope.row.judul }}
-              </p>
-              </router-link>
-            </template>
-          </el-table-column>
-          <el-table-column label="Pelaksana Kegiatan">
-            <template slot-scope="scope">
-              {{ scope.row.pelasksana_kegiatan }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Waktu Pelaksanaan">
-            <template slot-scope="scope">
-              {{ scope.row.waktu_pelaksanaan }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Action">
-            <template slot-scope="scope">
-              <el-tooltip content="Qr Code" placement="top-start" effect="dark">
-                <el-button size="mini" type="secondar" @click="edit(scope.row.id)"><i class="fa fa-edit"></i> Edit
-                </el-button>
-              </el-tooltip>
+        <vs-table striped>
+          <template #thead>
+            <vs-tr>
+              <vs-th>Judul</vs-th>
+              <vs-th>Pelaksana Kegiatan</vs-th>
+              <vs-th>Tempat Kegiatan</vs-th>
+              <vs-th>Sumber Pembiayaan</vs-th>
+              <vs-th>Segmen Kegiatan</vs-th>
+              <vs-th>Tanggal Mulai</vs-th>
+              <vs-th>Tanggal Selesai</vs-th>
+              <vs-th>Aktif</vs-th>
+              <vs-th>Action</vs-th>
+            </vs-tr>
+          </template>
+          <template #tbody>
+            <vs-tr :key="i" v-for="(tr, i) in getLapors.data" :data="tr">
+              <vs-td>
+                  <el-link><a class="text-primary" @click="detailLaporan(tr)">{{ tr.judul }}</a></el-link>
+              </vs-td>
+              <vs-td>
+                {{ tr.pelaksana_kegiatan }}
+              </vs-td>
+              <vs-td>
+                {{ tr.tempat_kegiatan }}
+              </vs-td>
+              <vs-td>
+                {{ tr.sumber_pembiayaan }}
+              </vs-td>
+              <vs-td>
+                {{ tr.segmen_kegiatan }}
+              </vs-td>
+              <vs-td>
+                {{ tr.tgl_mulai }}
+              </vs-td>
+              <vs-td>
+                {{ tr.tgl_selesai }}
+              </vs-td>
+              <vs-td>
+                <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
+                <span class="badge badge-warning" v-else>Non Aktif</span>
+              </vs-td>
+              <vs-td>
+                <el-tooltip content="Download Evidence" placement="top-start" effect="dark">
+                  <el-button size="mini" @click="downloadFile(`lapor/${tr.id}/evidence/download`)" icon="fa fa-download"></el-button>
+                </el-tooltip>
 
-              <el-tooltip content="Delete" placement="top-start" effect="dark">
-                <el-button size="mini" type="danger">
-                  <i class="fa fa-trash" @click="edit(scope.row.id)"></i> Hapus
-                </el-button>
-              </el-tooltip>
-            </template>
-          </el-table-column>
-        </el-table>
+                <el-tooltip content="Edit" placement="top-start" effect="dark">
+                  <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
+                </el-tooltip>
 
-        <el-row>
-          <el-col :span="24" align="center" style="margin-top:10px">
-            <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange" :total="total"
-              :current-page="page">
-            </el-pagination>
-          </el-col>
-        </el-row>
+                <el-tooltip content="Delete" placement="top-start" effect="dark">
+                  <el-button size="mini" type="primary" @click="deleteLaporan(tr.id)" icon="fa fa-trash"></el-button>
+                </el-tooltip>
+              </vs-td>
+            </vs-tr>
+          </template>
+          <template #footer>
+            <vs-row>
+              <vs-col w="2">
+                <small>Total : {{getLapors.total}} Data</small>
+              </vs-col>
+              <vs-col w="10">
+                <vs-pagination v-model="page" :length="Math.ceil(getLapors.total / table.max)" />
+              </vs-col>
+            </vs-row>
+          </template>
+        </vs-table>
       </el-card>
     </div>
 
     <!-- Floating Button -->
     <el-tooltip class="item" effect="dark" content="Buat Laporan Baru" placement="top-start">
-      <a class="float" @click="tambahDialog = true">
+      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah Laporan'">
         <i class="el-icon-plus my-float"></i>
       </a>
     </el-tooltip>
     <!-- End floating button-->
 
-    <el-dialog title="Tambah Laporan" :visible.sync="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'">
-      <el-form label-width="auto" ref="form" :model="sizeForm" size="mini">
-        <el-form-item label="Judul Laporan">
-          <el-input v-model="sizeForm.name"></el-input>
-        </el-form-item>
-        <el-form-item label="Pelaksana Kegiatan">
-          <el-select v-model="sizeForm.region" placeholder="Pilih Pelaksana Kegiatan">
-            <el-option v-for="pelki in pelaksana_kegiatan" :key="pelki.id" :label="pelki.label" :value="pelki.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Waktu Pelaksanaan">
-          <el-date-picker type="datetimerange" start-placeholder="Mulai" end-placeholder="Selesai"
-            :default-time="['12:00:00']">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="Tempat Kegiatan">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="Sumber Pembiayaan">
-          <el-select placeholder="Pilih Sumber Pembiayaan">
-            <el-option v-for="pelki in sumber_pembiayaan" :key="pelki.id" :label="pelki.label" :value="pelki.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Segmen Kegiatan">
-          <el-select placeholder="Pilih Segmen Kegiatan">
-            <el-option v-for="pelki in segmen_kegiatan" :key="pelki.id" :label="pelki.label" :value="pelki.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Kategori Kegiatan">
-          <el-select placeholder="Pilih Kategori Kegiatan">
-            <el-option v-for="pelki in kategori_kegiatan" :key="pelki.id" :label="pelki.label" :value="pelki.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Kandungan Nilai Pancasila">
-          <el-checkbox-group v-model="sizeForm.type">
-            <el-checkbox-button label="Sila Ke 1" name="type"></el-checkbox-button>
-            <el-checkbox-button label="Sila Ke 2" name="type"></el-checkbox-button>
-            <el-checkbox-button label="Sila Ke 3" name="type"></el-checkbox-button>
-            <el-checkbox-button label="Sila Ke 4" name="type"></el-checkbox-button>
-            <el-checkbox-button label="Sila Ke 5" name="type"></el-checkbox-button>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="Evidence">
-          <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-            <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
-          </el-upload>
-        </el-form-item>
-        <el-form-item size="large">
-          <el-button type="primary" @click="onSubmit">Simpan</el-button>
-          <el-button>Batal</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
+
+    <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="resetForm()">
+      <template #header>
+        <h1 class="not-margin">
+          {{titleDialog}}
+        </h1>
+      </template>
+      <div class="con-form">
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Judul</label>
+            <vs-input type="text" v-model="form.judul" placeholder="Judul"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Tempat Kegiatan</label>
+            <vs-input type="text" v-model="form.tempat_kegiatan" placeholder="Tempat Kegiatan"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Tanggal Mulai</label>
+            <vs-input type="datetime-local" v-model="form.tgl_mulai"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Tanggal Selesai</label>
+            <vs-input type="datetime-local" v-model="form.tgl_selesai"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Tautan</label>
+            <vs-input type="text" v-model="form.tautan" placeholder="Tautan"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Pelaksana Kegiatan</label>
+            <vs-select filter placeholder="Pelaksana Kegiatan" v-model="form.pelaksana_kegiatan">
+              <vs-option v-for="(item, index) in getSetting.pelaksana_kegiatan" :key="'pk-'+index" :label="item.value" :value="item.value">
+                {{item.value}}
+              </vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Sumber Pembiayaan</label>
+            <vs-select filter placeholder="Sumber Pembiayaan" v-model="form.sumber_pembiayaan">
+              <vs-option v-for="(item, index) in getSetting.sumber_pembiayaan" :key="'sp-'+index" :label="item.value" :value="item.value">
+                {{item.value}}
+              </vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Segmen Kegiatan</label>
+            <vs-select filter placeholder="Sumber Pembiayaan" v-model="form.segmen_kegiatan">
+              <vs-option v-for="(item, index) in getSetting.segmen_kegiatan" :key="'sg-'+index" :label="item.value" :value="item.value">
+                {{item.value}}
+              </vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Kategori Kegiatan</label>
+            <vs-select filter placeholder="Kategori Kegiatan" v-model="form.kategori_kegiatan">
+              <vs-option v-for="(item, index) in getSetting.kategori_kegiatan" :key="'kk-'+index" :label="item.value" :value="item.value">
+                {{item.value}}
+              </vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Kandungan Nilai Pancasila</label>
+            <vs-select filter multiple placeholder="Kategori Kegiatan" v-model="form.kandungan_pancasila">
+              <vs-option label="KETUHANAN YANG MAHA ESA" :value="1">
+                KETUHANAN YANG MAHA ESA
+              </vs-option>
+              <vs-option label="KEMANUSIAAN YANG ADIL DAN BERADAB" :value="2">
+                KEMANUSIAAN YANG ADIL DAN BERADAB
+              </vs-option>
+              <vs-option label="PERSATUAN INDONESIA" :value="3">
+                PERSATUAN INDONESIA
+              </vs-option>
+              <vs-option label="KERAKYATAN YANG DIPIMPIN OLEH HIKMAT KEBIJAKSANAAN DALAM PERMUSYAWARATAN/PERWAKILAN" :value="4">
+                KERAKYATAN YANG DIPIMPIN OLEH HIKMAT KEBIJAKSANAAN DALAM PERMUSYAWARATAN/PERWAKILAN
+              </vs-option>
+              <vs-option label="KEADILAN SOSIAL BAGI SELURUH RAKYAT INDONESIA" :value="5">
+                KEADILAN SOSIAL BAGI SELURUH RAKYAT INDONESIA
+              </vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
+            <label>Deskripsi</label>
+            <client-only>
+              <vue-editor v-model="form.deskripsi" :editorToolbar="customToolbar"></vue-editor>
+            </client-only>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Aktif</label>
+            <vs-switch style="width:20px" v-model="form.aktif" />
+          </vs-col>
+        </vs-row>
+      </div>
+
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-row>
+            <vs-col w="6" style="padding:5px">
+              <vs-button block :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</vs-button>
+              <vs-button block :loading="btnLoader" @click="onSubmit('store')" v-else>Simpan</vs-button>
+            </vs-col>
+            <vs-col w="6" style="padding:5px">
+              <vs-button block border @click="tambahDialog = false; resetForm()">Batal</vs-button>
+            </vs-col>
+          </vs-row>
+          <div>&nbsp;</div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
 <script>
+  import {
+    mapMutations,
+    mapGetters
+  } from 'vuex';
+
   export default {
     layout: 'admin',
     data() {
       return {
-        tambahDialog: false,
-        loading: false,
-        page: 1,
-        total: 2300,
-        tableData: [
-
-        ],
-        sizeForm: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+        table: {
+          max: 10
         },
-        pelaksana_kegiatan: [{
-            label: 'KESBANGPOL',
-            value: 'KESBANGPOL'
-          },
-          {
-            label: 'DINAS LAINNYA',
-            value: 'DINAS LAINNYA'
-          },
-          {
-            label: 'SWASTA',
-            value: 'SWASTA'
-          },
-        ],
-        sumber_pembiayaan: [{
-            label: 'APBN',
-            value: 'KESBANGPOL'
-          },
-          {
-            label: 'APBD',
-            value: 'DINAS LAINNYA'
-          },
-          {
-            label: 'MANDIRI',
-            value: 'SWASTA'
-          },
-          {
-            label: 'CSR',
-            value: 'SWASTA'
-          },
-          {
-            label: 'LAINYA',
-            value: 'SWASTA'
-          },
-        ],
-        segmen_kegiatan: [{
-            label: 'UMUM',
-            value: 'KESBANGPOL'
-          },
-          {
-            label: 'APARATUR NEGARA',
-            value: 'DINAS LAINNYA'
-          },
-          {
-            label: 'PEMUDA',
-            value: 'SWASTA'
-          },
-          {
-            label: 'ORMAS',
-            value: 'SWASTA'
-          }
-        ],
-        kategori_kegiatan: [{
-            label: 'SOSIALISASI',
-            value: 'KESBANGPOL'
-          },
-          {
-            label: 'PEMBUDAYAAN',
-            value: 'DINAS LAINNYA'
-          },
-          {
-            label: 'INSTITUSIONALISASI NILAI PANCASILA',
-            value: 'SWASTA'
-          },
-          {
-            label: 'INTERNALISASI NILAI PANCASILA',
-            value: 'SWASTA'
-          }
-        ]
+        page: 1,
+        customToolbar: [["bold", "italic", "underline"], [{ list: "ordered" }, { list: "bullet" }], [{'align': ''}, {'align': 'center'}, {'align': 'right'}, {'align': 'justify'}]],
+        titleDialog: 'Tambah Laporan',
+        tambahDialog: false,
+        search: '',
+        isUpdate: false,
+        btnLoader: false,
+        form: {
+          judul: "",
+          deskripsi: "",
+          evidences: [],
+          tgl_mulai: "",
+          tgl_selesai: "",
+          pelaksana_kegiatan: '',
+          tautan: '',
+          kategori_kegiatan: "",
+          sumber_pembiayaan: '',
+          segmen_kegiatan: '',
+          tempat_kegiatan: '',
+          aktif: true,
+          kandungan_pancasila: ''
+        },
       }
     },
     mounted() {
-      for (let i = 1; i <= 10; i++) {
-        this.tableData.push({
-          id: 1,
-          judul: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime autem minus minima voluptatibus iusto! Ipsam neque molestiae minima dolore atque corporis, adipisci necessitatibus voluptatum a tempore accusamus vitae, aspernatur cumque!',
-          waktu_pelaksanaan: '01/10/2020 sd 03/10/2020',
-          pelasksana_kegiatan: 'KESBANGPOL'
-        })
-      }
+      this.$store.dispatch('lapor/getAll', {
+        showall: 1
+      });
+
+      this.$store.dispatch('setting/getAll');
     },
     methods: {
-      edit(id) {
-
+      searchData(){
+        this.$store.dispatch('lapor/getAll', {
+          search: this.search
+        });
+      },
+      detailLaporan(data){
+        this.$store.commit('lapor/setLaporan', data)
+        this.$router.push('/admin/lapor/detail')
+      },
+      edit(data) {
+        let form = JSON.parse(JSON.stringify(data))
+        this.tambahDialog = true
+        this.titleDialog = 'Edit Laporan'
+        this.isUpdate = true
+        form.tgl_mulai =  new Date(form.tgl_mulai).toISOString().substring(0,16); 
+        form.tgl_selesai = new Date(form.tgl_selesai).toISOString().substring(0,16); 
+        // form.kandungan_pancasila = form.kandungan_pancasila.split(',')
+        this.form = form
+      },
+      resetForm() {
+        this.form = {
+          judul: "",
+          deskripsi: "",
+          evidences: [],
+          tgl_mulai: "",
+          tgl_selesai: "",
+          pelaksana_kegiatan: '',
+          tautan: '',
+          kategori_kegiatan: "",
+          sumber_pembiayaan: '',
+          segmen_kegiatan: '',
+          tempat_kegiatan: '',
+          aktif: true,
+          kandungan_pancasila: ''
+        }
       },
       handleCurrentChange(val) {
         this.page = val;
       },
-      onSubmit() {
-        console.log('submit!');
+      onSubmit(type = 'store') {
+        this.btnLoader = true
+        let url = "/lapor/store";
+        if (type == 'update') {
+          url = `/lapor/${this.form.id}/update`
+        }
+        let pancasila = '';
+        if(Array.isArray(this.form.kandungan_pancasila)){
+          this.form.kandungan_pancasila.forEach(e => {
+              if(e !== ''){
+                pancasila += pancasila == '' ? e : (',' + e)
+              }
+          });
+        }
+        this.form.kandungan_pancasila = pancasila !== '' ? pancasila : this.form.kandungan_pancasila;
+        this.$axios.post(url, this.form).then(resp => {
+          if (resp.data.success) {
+            this.$notify.success({
+              title: 'Success',
+              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} Laporan`
+            })
+            this.tambahDialog = false
+            this.resetForm()
+            this.$store.dispatch('lapor/getAll', {});
+          }
+        }).finally(() => {
+          this.btnLoader = false
+        }).catch(err => {
+          let error = err.response.data.data
+          if (error) {
+            this.showErrorField(error)
+          } else {
+            this.$notify.error({
+              title: 'Error',
+              message: err.response.data.message
+            })
+          }
+        })
+      },
+      deleteLaporan(id) {
+        this.$swal({
+          title: 'Perhatian!',
+          text: "Apakah anda yakin ingin menghapus data ini?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.$axios.delete(`/lapor/${id}/delete`).then(resp => {
+              if (resp.data.success) {
+                this.$notify.success({
+                  title: 'Success',
+                  message: 'Berhasil Menghapus Data'
+                })
+                this.tambahDialog = false
+                this.$store.dispatch('lapor/getAll', {
+                  defaultPage: true
+                });
+              }
+            }).finally(() => {
+              //
+            }).catch(err => {
+              this.$notify.error({
+                title: 'Error',
+                message: err.response.data.message
+              })
+            })
+          }
+        })
+      },
+    },
+    computed: {
+      ...mapGetters("lapor", [
+        'getLapors',
+        'getLoader'
+      ]),
+      ...mapGetters("setting", [
+        'getSetting'
+      ]),
+    },
+    watch: {
+      getLapors(newValue, oldValue) {
+
+      },
+      getSetting(newValue, oldValue){
+        console.log(newValue)
+      },
+      search(newValue, oldValue) {
+        // this.$store.dispatch('lapor/getAll', {
+        //   search: newValue
+        // });
+      },
+      page(newValue, oldValue) {
+        this.$store.commit('lapor/setPage', newValue)
+        this.$store.dispatch('lapor/getAll', {});
       }
     },
   }

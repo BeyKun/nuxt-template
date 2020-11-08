@@ -3,7 +3,7 @@ import {config} from './global.config'
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'serdadu',
+    title: 'SIMPUL KENDALI - BPIP',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -11,7 +11,7 @@ export default {
     ],
     link: [
       { rel: 'stylesheet', href: config.base + 'assets/vendor/element-ui/index.css' },
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/logo-simpulkendali.png' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap' },
       { rel: 'stylesheet', href: 'https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css' }
@@ -52,7 +52,9 @@ export default {
     '@static/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css',
     '@static/assets/vendor/nucleo/css/nucleo.css',
     '@static/assets/css/argon.min.css',
-    '@static/assets/scss/jmli.scss'
+    '@static/assets/scss/jmli.scss',
+    '@static/assets/scss/ckm.styl',
+    'boxicons/css/boxicons.min.css'
   ],
 
   /*
@@ -68,9 +70,11 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     {src: '@plugins/helper'},
-    {src: '@plugins/editor', mode: 'client'},
     {src: '@plugins/vuesax'},
-    { src: "@/plugins/chart", mode: 'client' }
+    {src: '@plugins/extablecolumn'},
+    {src: '@plugins/swal', mode: 'client'},
+    {src: '@plugins/vue2editor', mode: 'client'},
+    {src: "@/plugins/chart", mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -112,5 +116,60 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
 
+  },
+  /*
+  ** Customize the progress bar color
+  */
+  loading: {
+    name: 'chasing-dots',
+    color: '#E6A23C',
+    background: 'white',
+    height: '4px'
+  },
+
+  axios: {
+    baseURL: config.baseApiUrl,
+    headers: {
+      'Content-Type':'application/json',
+      'X-Requested-With':'XMLHttpRequest'
+    }
+  },
+  
+  auth: {
+    busy:false,
+    loggedIn:true,
+    strategies: {
+      local: {
+        endpoints: {
+          login: {url: '/login', method: 'post', propertyName: 'data.token'},
+          logout: false,
+          user: {url: '/user', method: 'get', propertyName: 'data'},
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer'
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      user: '/profile',
+      callback:'/'
+    }
+  },
+
+  extend (config, { isDev, isClient }) {
+    if (isDev && isClient) {
+      config.module.rules.push({
+        test: /\.(js|vue)$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        exclude: /(node_modules)/
+      });
+      config.module.rules.push({
+        test: /\.css$/,
+        loader: ['css-loader', 'stylus-loader'],
+        exclude: /(node_modules)/
+      });
+    }
   }
 }

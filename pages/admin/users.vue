@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header bg-danger pb-6" style="z-index:-1">
+    <div class="header bg-primary pb-6" style="z-index:-1">
       <div class="container-fluid">
         <div class="header-body">
           <!-- Card stats -->
@@ -9,133 +9,190 @@
       </div>
     </div>
     <div class="container-fluid mt--5">
-      <el-card>
+      <el-card v-loading="getLoader">
         <div class="row" style="margin-bottom:20px">
           <div class="col-md-3 offset-md-9">
-            <el-input placeholder="Cari" size="mini">
+            <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
               <i slot="prefix" class="el-input__icon el-icon-search"></i>
             </el-input>
           </div>
         </div>
-        <el-table :data="tableData" style="width: 100%" v-loading="loading">
-          <el-table-column label="Nama" width="200">
-            <template slot-scope="scope">
-              <p
-                style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap; cursor: pointer; color: #004689; font-weight: 500; font-size: 14px;padding-top: 14px;">
-                {{ scope.row.nama }}
-              </p>
-            </template>
-          </el-table-column>
-          <el-table-column label="NIP" width="120">
-            <template slot-scope="scope">
-              {{ scope.row.nip }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Jabatan" width="200">
-            <template slot-scope="scope">
-              {{ scope.row.jabatan }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Pemda Prov/Kab/Kota" width="200">
-            <template slot-scope="scope">
-              {{ scope.row.pemda }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Organisasi Daerah" width="200">
-            <template slot-scope="scope">
-              {{ scope.row.organisasi_daerah }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Unit Kerja" width="200">
-            <template slot-scope="scope">
-              {{ scope.row.unit_kerja }}
-            </template>
-          </el-table-column>
-          <el-table-column label="No HP / WA" width="200">
-            <template slot-scope="scope">
-              {{ scope.row.no_hp }}
-            </template>
-          </el-table-column>
-          <el-table-column label="Action" width="200">
-            <template slot-scope="scope">
-              <el-tooltip content="Qr Code" placement="top-start" effect="dark">
-                <el-button size="mini" type="secondar" @click="edit(scope.row.id)"><i class="fa fa-edit"></i> Edit
-                </el-button>
-              </el-tooltip>
+        <vs-table striped>
+          <template #thead>
+            <vs-tr>
+              <vs-th>Action</vs-th>
+              <vs-th>Name</vs-th>
+              <vs-th>NIP</vs-th>
+              <vs-th>Email</vs-th>
+              <vs-th>Jabatan</vs-th>
+              <vs-th>Pemda Prov/Kab/Kota</vs-th>
+              <vs-th>Organisasi Daerah</vs-th>
+              <vs-th>Unit Kerja</vs-th>
+              <vs-th>No HP/WA</vs-th>
+              <vs-th>Aktif</vs-th>
+            </vs-tr>
+          </template>
+          <template #tbody>
+            <vs-tr :key="i" v-for="(tr, i) in getUsers.data" :data="tr">
+              <vs-td>
+                <el-tooltip content="Edit" placement="top-start" effect="dark">
+                  <el-button size="mini" @click="edit(tr)" icon="fa fa-edit"></el-button>
+                </el-tooltip>
 
-              <el-tooltip content="Delete" placement="top-start" effect="dark">
-                <el-button size="mini" type="danger">
-                  <i class="fa fa-trash" @click="edit(scope.row.id)"></i> Hapus
-                </el-button>
-              </el-tooltip>
-            </template>
-          </el-table-column>
-        </el-table>
-
-        <el-row>
-          <el-col :span="24" align="center" style="margin-top:10px">
-            <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange" :total="total"
-              :current-page="page">
-            </el-pagination>
-          </el-col>
-        </el-row>
+                <el-tooltip content="Delete" placement="top-start" effect="dark">
+                  <el-button size="mini" type="primary" @click="deleteUser(tr.id)" icon="fa fa-trash"></el-button>
+                </el-tooltip>
+              </vs-td>
+              <vs-td>
+                {{ tr.nama }}
+              </vs-td>
+              <vs-td>
+                {{ tr.nip }}
+              </vs-td>
+              <vs-td>
+                {{ tr.email }}
+              </vs-td>
+              <vs-td>
+                {{ tr.jabatan }}
+              </vs-td>
+              <vs-td>
+                <img v-if="tr.goverment" :src="tr.goverment.foto_url" height="20" width="auto">
+                {{ tr.goverment ? tr.goverment.nama : '-' }}
+              </vs-td>
+              <vs-td>
+                {{ tr.organisasi }}
+              </vs-td>
+              <vs-td>
+                {{ tr.unit_kerja }}
+              </vs-td>
+              <vs-td>
+                {{ tr.no_hp }}
+              </vs-td>
+              <vs-td>
+                <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
+                <span class="badge badge-warning" v-else>Non Aktif</span>
+              </vs-td>
+            </vs-tr>
+          </template>
+          <template #footer>
+            <vs-row>
+              <vs-col w="2">
+                <small>Total : {{getUsers.total}} Data</small>
+              </vs-col>
+              <vs-col w="10">
+                <vs-pagination v-model="page" :length="Math.ceil(getUsers.total / table.max)" />
+              </vs-col>
+            </vs-row>
+          </template>
+        </vs-table>
       </el-card>
     </div>
 
     <!-- Floating Button -->
     <el-tooltip class="item" effect="dark" content="Buat User Baru" placement="top-start">
-      <a class="float" @click="tambahDialog = true">
+      <a class="float" @click="tambahDialog = true; titleDialog = 'Tambah User'">
         <i class="el-icon-plus my-float"></i>
       </a>
     </el-tooltip>
     <!-- End floating button-->
 
-    <el-dialog title="Tambah User" :visible.sync="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'">
-      <el-form ref="form" :model="form" label-width="auto">
-        <el-form-item label="Nama Lengkap">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="NIP">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="Nama Pemda / Pemprov">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="Organisasi Perangkat Daerah">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="Jabatan">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="Unit Kerja">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="Organisasi Perangkat Daerah">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="Email">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="No HP / WA">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="Password">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item label="Konfirmasi Password">
-          <el-input></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">Create</el-button>
-          <el-button>Cancel</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog>
+    <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
+      @close="resetForm()">
+      <template #header>
+        <h1 class="not-margin">
+          {{titleDialog}}
+        </h1>
+      </template>
+      <div class="con-form">
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Nama</label>
+            <vs-input type="text" v-model="form.nama" placeholder="Nama"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>NIP</label>
+            <vs-input type="number" v-model="form.nip" placeholder="NIP"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>No HP</label>
+            <vs-input type="number" v-model="form.no_hp" placeholder="No HP"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Email</label>
+            <vs-input v-model="form.email" placeholder="Email"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Jabatan</label>
+            <vs-input type="text" v-model="form.jabatan" placeholder="Jabatan"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Pemda Prov/Kab/Kota</label>
+            <vs-select filter placeholder="Pemda Prov/Kab/Kota" v-model="form.id_goverment">
+              <vs-option v-for="item in getGovementPlains" :key="item.id" :label="item.nama" :value="item.id">
+                {{item.nama}}
+              </vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Organisasi</label>
+            <vs-input type="text" v-model="form.organisasi" placeholder="Organisasi Daerah"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Unit Kerja</label>
+            <vs-input type="text" v-model="form.unit_kerja" placeholder="Unit Kerja"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Password</label>
+            <vs-input type="password" v-model="form.password" placeholder="Password"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Konfirmasi Password</label>
+            <vs-input type="password" v-model="form.konfirmasi_password" placeholder="Konfirmasi Password"></vs-input>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <label>Level</label>
+            <vs-select placeholder="Level" v-model="form.level">
+              <vs-option value="1" label="1">1</vs-option>
+              <vs-option value="2" label="2">2</vs-option>
+            </vs-select>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+            <vs-row>
+              <vs-col w="2">
+                <label>Aktif</label>
+              </vs-col>
+              <vs-col w="10">
+                <vs-switch style="width:20px" v-model="form.aktif" />
+              </vs-col>
+            </vs-row>
+          </vs-col>
+        </vs-row>
+      </div>
+
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-row>
+            <vs-col w="6" style="padding:5px">
+              <vs-button block :loading="btnLoader"  @click="confirmation('update')" v-if="isUpdate">Update</vs-button>
+              <vs-button block :loading="btnLoader" @click="confirmation('store')" v-else>Simpan</vs-button>
+            </vs-col>
+            <vs-col w="6" style="padding:5px">
+              <vs-button block border @click="tambahDialog = false; resetForm()">Batal</vs-button>
+            </vs-col>
+          </vs-row>
+          <div>&nbsp;</div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
 <script>
+  import {
+    mapMutations,
+    mapGetters
+  } from 'vuex';
+
   export default {
     layout: 'admin',
     components: {
@@ -143,126 +200,181 @@
     },
     data() {
       return {
+        table: {
+          max: 10
+        },
+         page: 1,
+        titleDialog: 'Tambah User',
         tambahDialog: false,
-        loading: false,
-        page: 1,
-        total: 2300,
-        info: "My Default Content",
-        tableData: [
-
-        ],
-        sizeForm: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+        search: '',
+        isUpdate: false,
+        btnLoader: false,
+        form: {
+          nama: "",
+          email: "",
+          nip: "",
+          unit_kerja: "",
+          jabatan: "",
+          no_hp: "",
+          id_goverment: '',
+          konfirmasi_password: '',
+          organisasi: "",
+          aktif: true,
+          level: 2,
+          foto: null
         },
-        pelaksana_kegiatan: [{
-            label: 'KESBANGPOL',
-            value: 'KESBANGPOL'
-          },
-          {
-            label: 'DINAS LAINNYA',
-            value: 'DINAS LAINNYA'
-          },
-          {
-            label: 'SWASTA',
-            value: 'SWASTA'
-          },
-        ],
-        sumber_pembiayaan: [{
-            label: 'APBN',
-            value: 'KESBANGPOL'
-          },
-          {
-            label: 'APBD',
-            value: 'DINAS LAINNYA'
-          },
-          {
-            label: 'MANDIRI',
-            value: 'SWASTA'
-          },
-          {
-            label: 'CSR',
-            value: 'SWASTA'
-          },
-          {
-            label: 'LAINYA',
-            value: 'SWASTA'
-          },
-        ],
-        segmen_kegiatan: [{
-            label: 'UMUM',
-            value: 'KESBANGPOL'
-          },
-          {
-            label: 'APARATUR NEGARA',
-            value: 'DINAS LAINNYA'
-          },
-          {
-            label: 'PEMUDA',
-            value: 'SWASTA'
-          },
-          {
-            label: 'ORMAS',
-            value: 'SWASTA'
-          }
-        ],
-        kategori_kegiatan: [{
-            label: 'SOSIALISASI',
-            value: 'KESBANGPOL'
-          },
-          {
-            label: 'PEMBUDAYAAN',
-            value: 'DINAS LAINNYA'
-          },
-          {
-            label: 'INSTITUSIONALISASI NILAI PANCASILA',
-            value: 'SWASTA'
-          },
-          {
-            label: 'INTERNALISASI NILAI PANCASILA',
-            value: 'SWASTA'
-          }
-        ],
-        config: {
-          events: {
-            'froalaEditor.initialized': function () {
-              console.log('initialized')
-            }
-          }
-        },
-        model: 'Edit Your Content Here!'
       }
     },
     mounted() {
-      for (let i = 1; i <= 10; i++) {
-        this.tableData.push({
-          id: i,
-          nama: 'Fulanah Bin Fulan',
-          nip: '1603093',
-          email: 'fulan@mail.com',
-          no_hp: '089887766234',
-          pemda: 'Pemprov Jawa Barat',
-          organisasi_daerah: 'Persatuan Pemuda Indonesia',
-          unit_kerja: 'Satu Dua',
-          jabatan: 'Direktur'
-        })
-      }
+      this.$store.dispatch('user/getAll', {
+        showall: 1
+      });
+      this.$store.dispatch('goverment/getPlains', {
+        showall: 0
+      });
     },
     methods: {
-      edit(id) {
+      searchData(){
+        this.$store.dispatch('user/getAll', {
+          search: this.search
+        });
+      },
+      edit(data) {
+        let form = JSON.parse(JSON.stringify(data))
+        let searchGov = form.goverment ? form.goverment.nama : ''
+        // this.$store.dispatch('goverment/getAll', {
+        //   search: searchGov,
+        //   showall: 0
+        // });
+        this.tambahDialog = true
+        this.titleDialog = 'Edit User'
+        this.isUpdate = true
+        // setTimeout(() => {
+        this.form = form
+        // }, 1000)
+      },
+      resetForm() {
+        this.form = {
+          nama: "",
+          email: "",
+          nip: "",
+          unit_kerja: "",
+          jabatan: "",
+          no_hp: "",
+          id_goverment: '',
+          organisasi: "",
+          aktif: true,
+          level: 2,
+          foto: null
+        }
+      },
+      confirmation(type) {
+        if (this.form.konfirmasi_password == this.form.password) {
+          this.onSubmit(type)
+        } else {
+          // this.$notify.error({
+          //   title: 'Konfirmasi Password',
+          //   message: `Password Tidak Sama`
+          // })
+          this.openNotification('top-right', 'danger', `<i class='bx bxs-error-circle'></i>`, 'Konfirmasi Password', 'Password Tidak Sama')
+        }
+      },
+      onSubmit(type = 'store') {
+        this.btnLoader = true
+        let url = "/user/store";
+        if (type == 'update') {
+          url = `/user/${this.form.id}/update`
+        }
+
+        this.$axios.post(url, this.form).then(resp => {
+          if (resp.data.success) {
+            this.$notify.success({
+              title: 'Success',
+              message: `Berhasil ${type == 'store' ? 'Menambah' : 'Mengubah'} User`
+            })
+            this.tambahDialog = false
+            this.resetForm()
+            this.$store.dispatch('user/getAll', {});
+          }
+        }).finally(() => {
+          this.btnLoader = false
+        }).catch(err => {
+          let error = err.response.data.data
+          if (error) {
+            this.showErrorField(error)
+          } else {
+            this.$notify.error({
+              title: 'Error',
+              message: err.response.data.message
+            })
+          }
+        })
+      },
+      deleteUser(id) {
+        this.$swal({
+          title: 'Perhatian!',
+          text: "Apakah anda yakin ingin menghapus data ini?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.$axios.delete(`/user/${id}/delete`).then(resp => {
+              if (resp.data.success) {
+                this.$notify.success({
+                  title: 'Success',
+                  message: 'Berhasil Menghapus Data'
+                })
+                this.tambahDialog = false
+                this.$store.dispatch('user/getAll', {
+                  defaultPage: true
+                });
+              }
+            }).finally(() => {
+              //
+            }).catch(err => {
+              this.$notify.error({
+                title: 'Error',
+                message: err.response.data.message
+              })
+            })
+          }
+        })
+      },
+      handleChangeSelect(data) {
+        this.$store.dispatch('goverment/getAll', {
+          search: data,
+          showall: 0
+        });
+      }
+    },
+    computed: {
+      ...mapGetters("user", [
+        'getUsers',
+        'getLoader'
+      ]),
+      ...mapGetters("goverment", [
+        'getGovementPlains',
+      ])
+    },
+    watch: {
+      getUsers(newValue, oldValue) {
 
       },
-      handleCurrentChange(val) {
-        this.page = val;
+      getGovementPlains(newValue) {
+        // console.log(newValue)
       },
-      onSubmit() {
-        console.log('submit!');
+      search(newValue, oldValue) {
+        // this.$store.dispatch('user/getAll', {
+        //   search: newValue
+        // });
+      },
+      page(newValue, oldValue) {
+        this.$store.commit('user/setPage', newValue)
+        this.$store.dispatch('user/getAll', {});
       }
     },
   }

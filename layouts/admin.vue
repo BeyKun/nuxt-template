@@ -5,26 +5,9 @@
     <!-- Main content -->
     <div class="main-content" id="panel">
       <!-- Topnav -->
-      <nav class="navbar navbar-top navbar-expand navbar-dark bg-danger">
+      <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary">
         <div class="container-fluid">
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Search form -->
-            <!--                        <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">-->
-            <!--                            <div class="form-group mb-0">-->
-            <!--                                <div class="input-group input-group-alternative input-group-merge">-->
-            <!--                                    <div class="input-group-prepend">-->
-            <!--                                        <span class="input-group-text"><i class="fas fa-search"></i></span>-->
-            <!--                                    </div>-->
-            <!--                                    <input class="form-control" placeholder="Search" type="text">-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                            <button type="button" class="close" data-action="search-close"-->
-            <!--                                    data-target="#navbar-search-main"-->
-            <!--                                    aria-label="Close">-->
-            <!--                                <span aria-hidden="true">×</span>-->
-            <!--                            </button>-->
-            <!--                        </form>-->
-            <!-- Navbar links -->
             <ul class="navbar-nav align-items-center  ml-md-auto ">
               <li class="nav-item d-xl-none">
                 <!-- Sidenav toggler -->
@@ -38,133 +21,7 @@
                 </div>
               </li>
               <li class="nav-item d-md-none">
-                <h3 style="color: #fff; font-weight: bold; margin-top:10px">SERDADU</h3>
-              </li>
-              <!-- <li class="nav-item d-sm-none">
-                                <a class="nav-link" href="#" data-action="search-show"
-                                   data-target="#navbar-search-main">
-                                    <i class="ni ni-zoom-split-in"></i>
-                                </a>
-                            </li> -->
-              <li class="nav-item dropdown" v-show="false">
-                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                  aria-expanded="false">
-                  <i class="ni ni-bell-55"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden"
-                  style="z-index: 2001">
-                  <!-- Dropdown header -->
-                  <div class="px-3 py-3">
-                    <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong> notifications.
-                    </h6>
-                  </div>
-                  <!-- List group -->
-                  <div class="list-group list-group-flush">
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="~static/assets/img/theme/team-1.jpg"
-                            class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm">John Snow</h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>2 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="~static/assets/img/theme/team-2.jpg"
-                            class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm">John Snow</h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>3 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="~static/assets/img/theme/team-3.jpg"
-                            class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm">John Snow</h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>5 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">Your posts have been liked a lot.</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="~static/assets/img/theme/team-4.jpg"
-                            class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm">John Snow</h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>2 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                        </div>
-                      </div>
-                    </a>
-                    <a href="#!" class="list-group-item list-group-item-action">
-                      <div class="row align-items-center">
-                        <div class="col-auto">
-                          <!-- Avatar -->
-                          <img alt="Image placeholder" src="~static/assets/img/theme/team-5.jpg"
-                            class="avatar rounded-circle">
-                        </div>
-                        <div class="col ml--2">
-                          <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                              <h4 class="mb-0 text-sm">John Snow</h4>
-                            </div>
-                            <div class="text-right text-muted">
-                              <small>3 hrs ago</small>
-                            </div>
-                          </div>
-                          <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                  <!-- View all -->
-                  <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View
-                    all</a>
-                </div>
+                <h3 style="color: #fff; font-weight: bold; margin-top:10px">SIMPUL KENDALI</h3>
               </li>
             </ul>
             <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
@@ -175,7 +32,7 @@
                     <!-- <span class="avatar avatar-sm rounded-circle"> -->
                     <!-- <img class="avatar" :src="user.photo_url" /> -->
                     <div class="avatar avatar-sm rounded-circle"
-                      :style="'background: #f3f3f3 url(' + user.photo_url + ') no-repeat top center / cover; width:25px; height:25px'">
+                      :style="'background: #f3f3f3 url(' + user.foto_url + ') no-repeat top center / cover; width:25px; height:25px'">
                     </div>
                     <!-- </span> -->
                     <!-- <div class="classname" :style="'background: #f3f3f3 url(' + user.photo_url + ') no-repeat top center / cover'"></div> -->
@@ -185,26 +42,17 @@
                     </div>
                   </div>
                 </a>
-                <div class="dropdown-menu  dropdown-menu-right ">
-                  <!--                                    <div class="dropdown-header noti-title">-->
-                  <!--                                        <h6 class="text-overflow m-0">Welcome!</h6>-->
-                  <!--                                    </div>-->
-                  <!--                                    <a href="https://jmclick.jasamarga.co.id" target="_blank" class="dropdown-item">-->
-                  <!--                                        <i class="ni ni-single-02"></i>-->
-                  <!--                                        <span>My profile</span>-->
-                  <!--                                    </a>-->
-                  <router-link to="/profile">
-                  <a class="dropdown-item text-danger" style="cursor:pointer">
-                    <i class="ni ni-single-02"></i>
-                    <span>Profile</span>
-                  </a>
-                  </router-link>
-                  <router-link to="/">
-                  <a class="dropdown-item text-danger" style="cursor:pointer">
+                <div class="dropdown-menu dropdown-menu-right">
+                  <!-- <router-link to="/profile"> -->
+                    <a class="dropdown-item text-primary" @click="$router.push('/profile')" style="cursor:pointer">
+                      <i class="ni ni-single-02"></i>
+                      <span>Profile</span>
+                    </a>
+                  <!-- </router-link> -->
+                  <a class="dropdown-item text-primary" @click="logout()" style="cursor:pointer">
                     <i class="ni ni-user-run"></i>
                     <span>Logout</span>
                   </a>
-                  </router-link>
                 </div>
               </li>
             </ul>
@@ -220,7 +68,7 @@
         <div class="row align-items-center justify-content-lg-between">
           <div class="col-lg-6">
             <div class="copyright text-center  text-lg-left  text-muted">
-              &copy; 2020 <a href="#" class="font-weight-bold ml-1 text-danger">
+              &copy; 2020 <a href="#" class="font-weight-bold ml-1 text-primary">
                 Badan Pengelolaan Ideologi Pancasila</a>
             </div>
           </div>
@@ -236,13 +84,14 @@
   } from 'vuex';
 
   export default {
+    middleware: 'auth',
     components: {
       'sidebar': Sidebar
     },
     data() {
       return {
         showSideBar: false,
-        collapse: false,
+        collapse: true,
         user: {
           nama: '',
           photo_url: ''
@@ -250,11 +99,6 @@
       }
     },
     mounted() {
-      // this.user = {
-      //     nama: this.$auth.$state.user.nm,
-      //     photo_url: this.$auth.$state.user.photo_url
-      // };
-
       window.onresize = () => {
         this.changeDrawer();
       };
@@ -279,7 +123,7 @@
         toggle: "drawer/toggle"
       }),
       logout() {
-        // this.$auth.logout();
+        this.$auth.logout();
       }
     }
   }
