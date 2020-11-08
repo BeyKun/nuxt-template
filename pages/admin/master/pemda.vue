@@ -114,7 +114,7 @@
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
             <label>Logo</label>
-            <el-upload action="/" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
               :file-list="files" :limit="1">
               <i class="el-icon-plus"></i>
             </el-upload>
@@ -156,6 +156,10 @@
     mapGetters
   } from 'vuex';
 
+  import {
+    config
+  } from '../../../global.config'
+
   export default {
     layout: 'admin',
     components: {
@@ -163,6 +167,7 @@
     },
     data() {
       return {
+        api_url: config.baseApiUrl,
         table: {
           max: 10
         },

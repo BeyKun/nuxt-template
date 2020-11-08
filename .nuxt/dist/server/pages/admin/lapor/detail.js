@@ -1,23 +1,6 @@
 exports.ids = [5];
 exports.modules = {
 
-/***/ 105:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return config; });
-const config = {
-  base: '/',
-  baseUrl: 'http://simpulkendali-api.ckmindramayu.com',
-  baseApiUrl: 'http://simpulkendali-api.ckmindramayu.com' // base: '/',
-  // baseUrl: 'http://simpulkendali-api.test:8080',
-  // baseApiUrl : 'http://simpulkendali-api.test:8080'
-
-};
-
-
-/***/ }),
-
 /***/ 109:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -79,7 +62,7 @@ var staticRenderFns = []
 var external_vuex_ = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./global.config.js
-var global_config = __webpack_require__(105);
+var global_config = __webpack_require__(98);
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/admin/lapor/detail.vue?vue&type=script&lang=js&
 //
@@ -323,6 +306,23 @@ var component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var detail = __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ 98:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return config; });
+const config = {
+  base: '/',
+  baseUrl: 'http://simpulkendali-api.ckmindramayu.com',
+  baseApiUrl: 'http://simpulkendali-api.ckmindramayu.com' // base: '/',
+  // baseUrl: 'http://simpulkendali-api.test:8080',
+  // baseApiUrl : 'http://simpulkendali-api.test:8080'
+
+};
+
 
 /***/ })
 

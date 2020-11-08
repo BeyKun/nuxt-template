@@ -142,7 +142,7 @@
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
             <label>Evidence</label>
-            <el-upload class="upload-demo" list-type="picture-card" action="/" :on-change="handleChangeFile"
+            <el-upload class="upload-demo" list-type="picture-card" :action="api_url + '/fake-upload'" :on-change="handleChangeFile"
               accept="image/*" :file-list="files" v-if="!isUpdate">
               <i class="el-icon-plus"></i>
             </el-upload>

@@ -32,7 +32,7 @@
                     <!-- <span class="avatar avatar-sm rounded-circle"> -->
                     <!-- <img class="avatar" :src="user.photo_url" /> -->
                     <div class="avatar avatar-sm rounded-circle"
-                      :style="'background: #f3f3f3 url(' + user.foto_url + ') no-repeat top center / cover; width:25px; height:25px'">
+                      :style="'background: #f3f3f3 url(' + $auth.user.foto_url + ') no-repeat top center / cover; width:25px; height:25px'">
                     </div>
                     <!-- </span> -->
                     <!-- <div class="classname" :style="'background: #f3f3f3 url(' + user.photo_url + ') no-repeat top center / cover'"></div> -->
