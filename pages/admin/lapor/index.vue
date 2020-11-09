@@ -24,12 +24,12 @@
             </el-date-picker>
           </div>
           <div class="col-md-4">
-            <el-select size="mini" filterable v-model="searchGoverment" @change="searchData()" placeholder="Pilih Pemda" style="width:100%">
+            <el-select size="mini" clearable filterable v-model="searchGoverment" @change="searchData()" placeholder="Pilih Pemda" style="width:100%">
               <el-option v-for="item in getGovermentPlains" :key="'gov-'+item.id" :label="item.nama" :value="item.id"
                 style="height:60px">
                 <div class="row">
                   <div class="col-2">
-                    <span style="float: left"><img :src="item.foto_url" height="50" width="auto" alt=""></span>
+                    <span style="float: left"><img :src="item.foto_url" height="30" width="auto" alt=""></span>
                   </div>
                   <div class="col-10">
                     <span>{{ item.nama }}</span>
@@ -299,7 +299,8 @@
         this.$store.dispatch('lapor/getAll', {
           search: this.search,
           start_date: start_date,
-          end_date: end_date
+          end_date: end_date,
+          goverment: this.searchGoverment
         });
       },
       detailLaporan(data){

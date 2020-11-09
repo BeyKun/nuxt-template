@@ -1946,11 +1946,12 @@ const actions = {
     search = '',
     defaultPage = false,
     start_date = '',
-    end_date = ''
+    end_date = '',
+    goverment = ''
   }) {
     context.commit("setLoader");
     let page = defaultPage ? 1 : context.state.lapors.current_page;
-    this.$axios.get(`/lapors?showall=${showall}&page=${page}&search=${search}&start_date=${start_date}&end_date=${end_date}`).then(resp => {
+    this.$axios.get(`/lapors?showall=${showall}&page=${page}&search=${search}&start_date=${start_date}&end_date=${end_date}&goverment=${goverment}`).then(resp => {
       context.commit('setLapors', resp.data);
     }).catch(e => {
       console.log(e);
@@ -1976,9 +1977,54 @@ const actions = {
 
 /***/ }),
 /* 92 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "state", function() { return state; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mutations", function() { return mutations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getters", function() { return getters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "actions", function() { return actions; });
+const state = () => ({
+  chart: {
+    segmentasi: [],
+    time: {
+      week: [],
+      month: [],
+      year: []
+    },
+    kategori: []
+  }
+});
+const mutations = {
+  setChart(state, data) {
+    state.chart[data.type] = data.data;
+  }
 
+};
+const getters = {
+  getChart(state) {
+    return state.chart;
+  }
+
+};
+const actions = {
+  getChartLaporanMasuk(context, {
+    type,
+    goverment = ''
+  }) {
+    this.$axios.get(`/laporan-masuk/${type}?goverment=${goverment}`).then(resp => {
+      context.commit('setChart', {
+        type: type,
+        data: resp.data.data
+      });
+    }).catch(e => {
+      console.log(e);
+    }).finally(() => {//
+    });
+  }
+
+};
 
 /***/ }),
 /* 93 */
@@ -2919,33 +2965,33 @@ if (false) {}
 
 
 
-const _5d93439a = () => interopDefault(__webpack_require__.e(/* import() | pages/login */ 11).then(__webpack_require__.bind(null, 143)));
+const _5d93439a = () => interopDefault(__webpack_require__.e(/* import() | pages/login */ 11).then(__webpack_require__.bind(null, 144)));
 
-const _584473f3 = () => interopDefault(__webpack_require__.e(/* import() | pages/profile */ 12).then(__webpack_require__.bind(null, 144)));
+const _584473f3 = () => interopDefault(__webpack_require__.e(/* import() | pages/profile */ 12).then(__webpack_require__.bind(null, 145)));
 
-const _042d29c9 = () => interopDefault(__webpack_require__.e(/* import() | pages/register */ 13).then(__webpack_require__.bind(null, 145)));
+const _042d29c9 = () => interopDefault(__webpack_require__.e(/* import() | pages/register */ 13).then(__webpack_require__.bind(null, 146)));
 
-const _1a1fd202 = () => interopDefault(__webpack_require__.e(/* import() | pages/reset-password */ 14).then(__webpack_require__.bind(null, 146)));
+const _1a1fd202 = () => interopDefault(__webpack_require__.e(/* import() | pages/reset-password */ 14).then(__webpack_require__.bind(null, 147)));
 
-const _01e115b0 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/beranda */ 1).then(__webpack_require__.bind(null, 142)));
+const _01e115b0 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/beranda */ 1).then(__webpack_require__.bind(null, 148)));
 
-const _8cffc880 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/berita */ 2).then(__webpack_require__.bind(null, 147)));
+const _8cffc880 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/berita */ 2).then(__webpack_require__.bind(null, 149)));
 
-const _b2148136 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/informasi */ 3).then(__webpack_require__.bind(null, 148)));
+const _b2148136 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/informasi */ 3).then(__webpack_require__.bind(null, 150)));
 
-const _a454b696 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/kegiatan */ 4).then(__webpack_require__.bind(null, 149)));
+const _a454b696 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/kegiatan */ 4).then(__webpack_require__.bind(null, 151)));
 
-const _523afca6 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/lapor/index */ 6).then(__webpack_require__.bind(null, 150)));
+const _523afca6 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/lapor/index */ 6).then(__webpack_require__.bind(null, 152)));
 
-const _28c6bd02 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/users */ 9).then(__webpack_require__.bind(null, 151)));
+const _28c6bd02 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/users */ 9).then(__webpack_require__.bind(null, 153)));
 
-const _c47e78f4 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/lapor/detail */ 5).then(__webpack_require__.bind(null, 152)));
+const _c47e78f4 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/lapor/detail */ 5).then(__webpack_require__.bind(null, 154)));
 
-const _0a09d66a = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/master/pemda */ 7).then(__webpack_require__.bind(null, 153)));
+const _0a09d66a = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/master/pemda */ 7).then(__webpack_require__.bind(null, 155)));
 
-const _0d027c65 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/master/setting */ 8).then(__webpack_require__.bind(null, 154)));
+const _0d027c65 = () => interopDefault(__webpack_require__.e(/* import() | pages/admin/master/setting */ 8).then(__webpack_require__.bind(null, 156)));
 
-const _078ebb1c = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 10).then(__webpack_require__.bind(null, 155))); // TODO: remove in Nuxt 3
+const _078ebb1c = () => interopDefault(__webpack_require__.e(/* import() | pages/index */ 10).then(__webpack_require__.bind(null, 157))); // TODO: remove in Nuxt 3
 
 
 const emptyFn = () => {};

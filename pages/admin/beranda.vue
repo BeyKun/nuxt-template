@@ -119,18 +119,19 @@
         </div>
       </div>
 
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-md-12 text-center" style="margin-top:20px">
           <label><b>Pemerintah Daerah</b></label>
-          <el-select filterable v-model="selectKementrian" placeholder="Pilih Pemda" style="width:100%">
-            <el-option v-for="item in kemementrian" :key="item.id" :label="item.judul" :value="item.judul"
+          <el-select size="mini" clearable filterable v-model="searchGoverment" @change="searchData()" placeholder="Pilih Pemda"
+            style="width:100%">
+            <el-option v-for="item in getGovermentPlains" :key="'gov-'+item.id" :label="item.nama" :value="item.id"
               style="height:60px">
               <div class="row">
                 <div class="col-2">
-                  <span style="float: left"><img :src="item.url" height="50" width="auto" alt=""></span>
+                  <span style="float: left"><img :src="item.foto_url" height="30" width="auto" alt=""></span>
                 </div>
                 <div class="col-10">
-                  <span>{{ item.judul }}</span>
+                  <span>{{ item.nama }}</span>
                 </div>
               </div>
             </el-option>
@@ -148,7 +149,7 @@
             </div>
           </el-card>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -157,6 +158,12 @@
   import ChartBar from "@/components/chart/chart-bar";
   import ChartDoughnut from "@/components/chart/chart-doughnut";
   import ChartLine from "@/components/chart/chart-line";
+
+  import {
+    mapMutations,
+    mapGetters
+  } from 'vuex';
+
   export default {
     components: {
       ChartBar,
@@ -166,8 +173,7 @@
     layout: 'admin',
     data() {
       return {
-        selectKementrian: '',
-        kemementrian: [],
+        searchGoverment: '',
         summary: {
           laporan: {
             type: "up",
@@ -195,9 +201,26 @@
     mounted() {
       this.getSummary()
       this.getBeritaPopuler()
+      this.$store.dispatch('goverment/getPlains', {
+        showall: 0
+      });
       // this.getPopularCourses()
     },
     methods: {
+      searchData() {
+        this.$store.dispatch('service/getChartLaporanMasuk', {
+          type: 'segmentasi',
+          goverment: this.searchGoverment
+        })
+        this.$store.dispatch('service/getChartLaporanMasuk', {
+          type: 'kategori',
+          goverment: this.searchGoverment
+        })
+        this.$store.dispatch('service/getChartLaporanMasuk', {
+          type: 'time',
+          goverment: this.searchGoverment
+        })
+      },
       async getSummary() {
         await this.$axios.get('/summary').then(response => {
           if (response.data.success) {
@@ -216,6 +239,11 @@
           this.loadingBeritaPopuler = false
         })
       },
+    },
+    computed: {
+      ...mapGetters("goverment", [
+        'getGovermentPlains'
+      ]),
     },
   }
 

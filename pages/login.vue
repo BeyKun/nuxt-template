@@ -75,6 +75,7 @@
             data: {
               "email": this.username,
               "password": this.password,
+              "is_admin": 1
             }
           }).catch(e => {
             console.log(e);
