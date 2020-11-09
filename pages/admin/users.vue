@@ -128,7 +128,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Pemda Prov/Kab/Kota</label>
             <vs-select filter placeholder="Pemda Prov/Kab/Kota" v-model="form.id_goverment">
-              <vs-option v-for="item in getGovementPlains" :key="item.id" :label="item.nama" :value="item.id">
+              <vs-option v-for="item in getGovermentPlains" :key="item.id" :label="item.nama" :value="item.id">
                 {{item.nama}}
               </vs-option>
             </vs-select>
@@ -357,14 +357,14 @@
         'getLoader'
       ]),
       ...mapGetters("goverment", [
-        'getGovementPlains',
+        'getGovermentPlains',
       ])
     },
     watch: {
       getUsers(newValue, oldValue) {
 
       },
-      getGovementPlains(newValue) {
+      getGovermentPlains(newValue) {
         // console.log(newValue)
       },
       search(newValue, oldValue) {

@@ -11,32 +11,32 @@
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col-md-12">
-          <vs-button warn style="float:right" gradient>Download PDF</vs-button>
+          <vs-button warn style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/lapor/download/pdf`)">Download PDF</vs-button>
           &nbsp;
-          <vs-button success style="float:right" gradient>Download Excel</vs-button>
+          <vs-button success style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/lapor/download/xlsx`)">Download Excel</vs-button>
         </div>
       </div>
       <el-card v-loading="getLoader">
         <div class="row" style="margin-bottom:20px">
           <div class="col-md-4">
             <el-date-picker size="mini" type="daterange" range-separator="-" start-placeholder="Start date"
-              end-placeholder="End date" style="width:100%">
+              end-placeholder="End date" style="width:100%" v-model="searchDate" value-format="yyyy-MM-dd" @change="searchData()">
             </el-date-picker>
           </div>
           <div class="col-md-4">
-            <!-- <el-select size="mini" filterable v-model="selectKementrian" placeholder="Pilih Pemda" style="width:100%">
-              <el-option v-for="item in kemementrian" :key="item.id" :label="item.judul" :value="item.judul"
+            <el-select size="mini" filterable v-model="searchGoverment" @change="searchData()" placeholder="Pilih Pemda" style="width:100%">
+              <el-option v-for="item in getGovermentPlains" :key="'gov-'+item.id" :label="item.nama" :value="item.id"
                 style="height:60px">
                 <div class="row">
                   <div class="col-2">
-                    <span style="float: left"><img :src="item.url" height="50" width="auto" alt=""></span>
+                    <span style="float: left"><img :src="item.foto_url" height="50" width="auto" alt=""></span>
                   </div>
                   <div class="col-10">
-                    <span>{{ item.judul }}</span>
+                    <span>{{ item.nama }}</span>
                   </div>
                 </div>
               </el-option>
-            </el-select> -->
+            </el-select>
           </div>
           <div class="col-md-4">
             <el-input placeholder="Cari" v-model="search" @change="searchData()" size="mini">
@@ -48,6 +48,7 @@
           <template #thead>
             <vs-tr>
               <vs-th>Judul</vs-th>
+              <vs-th>Goverment</vs-th>
               <vs-th>Pelaksana Kegiatan</vs-th>
               <vs-th>Tempat Kegiatan</vs-th>
               <vs-th>Sumber Pembiayaan</vs-th>
@@ -62,6 +63,9 @@
             <vs-tr :key="i" v-for="(tr, i) in getLapors.data" :data="tr">
               <vs-td>
                   <el-link><a class="text-primary" @click="detailLaporan(tr)">{{ tr.judul }}</a></el-link>
+              </vs-td>
+              <vs-td>
+                {{ tr.user ? (tr.user.goverment ? tr.user.goverment.nama : '-') : '-'}}
               </vs-td>
               <vs-td>
                 {{ tr.pelaksana_kegiatan }}
@@ -270,6 +274,8 @@
           aktif: true,
           kandungan_pancasila: ''
         },
+        searchDate: ['', ''],
+        searchGoverment: ''
       }
     },
     mounted() {
@@ -278,11 +284,22 @@
       });
 
       this.$store.dispatch('setting/getAll');
+      this.$store.dispatch('goverment/getPlains', {
+        showall: 0
+      });
     },
     methods: {
       searchData(){
+        let start_date = '';
+        let end_date = '';
+        if(this.searchDate){
+          start_date = this.searchDate[0]
+          end_date = this.searchDate[1]
+        }
         this.$store.dispatch('lapor/getAll', {
-          search: this.search
+          search: this.search,
+          start_date: start_date,
+          end_date: end_date
         });
       },
       detailLaporan(data){
@@ -400,6 +417,9 @@
       ]),
       ...mapGetters("setting", [
         'getSetting'
+      ]),
+      ...mapGetters("goverment", [
+        'getGovermentPlains'
       ]),
     },
     watch: {

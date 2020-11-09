@@ -43,10 +43,10 @@ export const getters = {
 };
 
 export const actions = {
-    getAll(context, {showall = 1, search = '', defaultPage = false}){
+    getAll(context, {showall = 1, search = '', defaultPage = false, start_date = '', end_date = ''}){
         context.commit("setLoader")
         let page = defaultPage ? 1 : context.state.lapors.current_page
-        this.$axios.get(`/lapors?showall=${showall}&page=${page}&search=${search}`).then(resp => {
+        this.$axios.get(`/lapors?showall=${showall}&page=${page}&search=${search}&start_date=${start_date}&end_date=${end_date}`).then(resp => {
             context.commit('setLapors', resp.data)
         }).catch(e => {
             console.log(e)

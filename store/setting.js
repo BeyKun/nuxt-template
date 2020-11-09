@@ -20,7 +20,7 @@ export const getters = {
 };
 
 export const actions = {
-    getALl(context){
+    getAll(context){
         let setting = context.state.setting
         Object.keys(setting).forEach((key) => {
             this.$axios.get(`/settings/${key}`).then(resp => {

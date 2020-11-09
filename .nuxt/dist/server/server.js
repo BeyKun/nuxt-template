@@ -1714,7 +1714,7 @@ const getters = {
     return state.govLoader;
   },
 
-  getGovementPlains(state) {
+  getGovermentPlains(state) {
     return state.govermentPlains;
   }
 
@@ -1944,11 +1944,13 @@ const actions = {
   getAll(context, {
     showall = 1,
     search = '',
-    defaultPage = false
+    defaultPage = false,
+    start_date = '',
+    end_date = ''
   }) {
     context.commit("setLoader");
     let page = defaultPage ? 1 : context.state.lapors.current_page;
-    this.$axios.get(`/lapors?showall=${showall}&page=${page}&search=${search}`).then(resp => {
+    this.$axios.get(`/lapors?showall=${showall}&page=${page}&search=${search}&start_date=${start_date}&end_date=${end_date}`).then(resp => {
       context.commit('setLapors', resp.data);
     }).catch(e => {
       console.log(e);
@@ -2009,7 +2011,7 @@ const getters = {
 
 };
 const actions = {
-  getALl(context) {
+  getAll(context) {
     let setting = context.state.setting;
     Object.keys(setting).forEach(key => {
       this.$axios.get(`/settings/${key}`).then(resp => {
@@ -4354,7 +4356,7 @@ const setupProgress = axios => {
   // runtimeConfig
   const runtimeConfig = ctx.$config && ctx.$config.axios || {}; // baseURL
 
-  const baseURL =  false ? undefined : runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://simpulkendali-api.ckmindramayu.com'; // Create fresh objects for all default header scopes
+  const baseURL =  false ? undefined : runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://simpulkendali-api.test:8080'; // Create fresh objects for all default header scopes
   // Axios creates only one which is shared across SSR requests!
   // https://github.com/mzabriskie/axios/blob/master/lib/defaults.js
 
@@ -4417,6 +4419,12 @@ external_vue_default.a.use(external_element_ui_default.a, {
 // CONCATENATED MODULE: ./plugins/helper.js
 
 external_vue_default.a.mixin({
+  data() {
+    return {
+      globalLoader: false
+    };
+  },
+
   methods: {
     humanize(str) {
       let frags = str.split('_');
@@ -4494,16 +4502,23 @@ external_vue_default.a.mixin({
     },
 
     downloadFile(url) {
-      this.$axios.get(url).then(resp => {
-        if (resp.data.success) {
-          window.open(resp.data.data.file_name, '_blank');
+      this.globalLoader = true;
+      this.$axios.get(url, {
+        responseType: 'arraybuffer',
+        headers: {
+          'Content-Type': 'application/json'
         }
-      }).catch(err => {
-        this.$notify.error({
-          title: 'Error',
-          message: 'File Evidence tidak ditemukan'
-        });
-      }).finally(() => {//
+      }).then(response => {
+        let filename = response.headers['content-disposition'].replace("attachment; filename=", '');
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename); //or any other extension
+
+        document.body.appendChild(link);
+        link.click();
+      }).catch(error => console.log(error)).finally(() => {
+        this.globalLoader = false;
       });
     }
 

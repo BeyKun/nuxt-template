@@ -30,7 +30,7 @@ export const getters = {
     getLoader(state){
         return state.govLoader
     },
-    getGovementPlains(state){
+    getGovermentPlains(state){
         return state.govermentPlains
     }
 };

@@ -97,6 +97,22 @@
                   {{sila}}</span>
               </div>
             </div>
+            <div class="row">
+              <div class="col-4">
+                <b>Pembuat</b>
+              </div>
+              <div class="col-8">
+                : {{getLaporan.user ? (getLaporan.user.nama+`  (${getLaporan.user.nip})`)  : '-'}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <b>Goverment</b>
+              </div>
+              <div class="col-8">
+                : {{ getLaporan.user ? (getLaporan.user.goverment ? getLaporan.user.goverment.nama : '-') : '-'}}
+              </div>
+            </div>
           </el-tab-pane>
           <el-tab-pane label="Evidence" name="evidence">
             <div class="row">

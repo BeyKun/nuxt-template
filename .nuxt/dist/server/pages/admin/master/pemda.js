@@ -420,12 +420,12 @@ var component = Object(componentNormalizer["a" /* default */])(
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return config; });
 const config = {
+  // base: '/',
+  // baseUrl: 'http://simpulkendali-api.ckmindramayu.com',
+  // baseApiUrl : 'http://simpulkendali-api.ckmindramayu.com'
   base: '/',
-  baseUrl: 'http://simpulkendali-api.ckmindramayu.com',
-  baseApiUrl: 'http://simpulkendali-api.ckmindramayu.com' // base: '/',
-  // baseUrl: 'http://simpulkendali-api.test:8080',
-  // baseApiUrl : 'http://simpulkendali-api.test:8080'
-
+  baseUrl: 'http://simpulkendali-api.test:8080',
+  baseApiUrl: 'http://simpulkendali-api.test:8080'
 };
 
 
