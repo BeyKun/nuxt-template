@@ -8,7 +8,14 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid mt--5">
+    <div class="container-fluid mt--7">
+      <div class="row">
+        <div class="col-md-12">
+          <vs-button warn style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/berita/download/pdf`)">Download PDF</vs-button>
+          &nbsp;
+          <vs-button success style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/berita/download/xlsx`)">Download Excel</vs-button>
+        </div>
+      </div>
       <el-card v-loading="getLoader">
         <div class="row" style="margin-bottom:20px">
           <div class="col-md-3 offset-md-9">
@@ -226,6 +233,7 @@
             })
             this.tambahDialog = false
             this.$store.dispatch('berita/getAll', {});
+             this.resetForm()
           }
         }).finally(() => {
           this.btnLoader = false

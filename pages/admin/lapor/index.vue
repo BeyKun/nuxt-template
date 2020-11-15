@@ -312,8 +312,8 @@
         this.tambahDialog = true
         this.titleDialog = 'Edit Laporan'
         this.isUpdate = true
-        form.tgl_mulai =  new Date(form.tgl_mulai).toISOString().substring(0,16); 
-        form.tgl_selesai = new Date(form.tgl_selesai).toISOString().substring(0,16); 
+        form.tgl_mulai =  this.$moment(form.tgl_mulai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss'); 
+        form.tgl_selesai = this.$moment(form.tgl_selesai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss'); 
         // form.kandungan_pancasila = form.kandungan_pancasila.split(',')
         this.form = form
       },

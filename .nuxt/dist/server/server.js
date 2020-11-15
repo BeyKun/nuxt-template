@@ -2090,7 +2090,11 @@ const state = () => ({
     total: 0,
     current_page: 1
   },
-  userLoader: false
+  userLoader: false,
+  summary: {
+    aktif: 0,
+    non_aktif: 0
+  }
 });
 const mutations = {
   setUsers(state, data) {
@@ -2103,6 +2107,10 @@ const mutations = {
 
   setPage(state, data) {
     state.users.current_page = data;
+  },
+
+  setSummary(state, data) {
+    state.summary = data;
   }
 
 };
@@ -2115,8 +2123,8 @@ const getters = {
     return state.userLoader;
   },
 
-  setPage(state, data) {
-    state.users.current_page = data;
+  getSummary(state) {
+    return state.summary;
   }
 
 };
@@ -2134,6 +2142,15 @@ const actions = {
       console.log(e);
     }).finally(() => {
       context.commit("setLoader");
+    });
+  },
+
+  getUserSummary(context) {
+    this.$axios.get(`/user-summary`).then(resp => {
+      context.commit('setSummary', resp.data.data);
+    }).catch(e => {
+      console.log(e);
+    }).finally(() => {// context.commit("setLoader")
     });
   }
 

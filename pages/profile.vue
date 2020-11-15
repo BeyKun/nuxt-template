@@ -129,7 +129,7 @@
               <vs-button block :loading="btnLoader"  @click="confirmation()">Simpan</vs-button>
             </vs-col>
             <vs-col w="6" style="padding:5px">
-              <vs-button block border @click="tambahDialog = false; resetForm()">Batal</vs-button>
+              <vs-button block border @click="tambahDialog = false;">Batal</vs-button>
             </vs-col>
           </vs-row>
           <div>&nbsp;</div>

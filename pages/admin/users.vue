@@ -8,7 +8,44 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid mt--5">
+    <div class="container-fluid mt--7">
+        <div class="row" style="padding-top:40px">
+                    <div class="col-xl-3">
+                        <div class="card card-stats">
+                            <!-- Card body -->
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">
+                                            User Aktif</h5>
+                                        <span
+                                            class="h2 font-weight-bold mb-0">{{numberWithCommas(getSummary.aktif)}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="card card-stats">
+                            <!-- Card body -->
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-muted mb-0">
+                                            User Non Aktif</h5>
+                                        <span
+                                            class="h2 font-weight-bold mb-0">{{numberWithCommas(getSummary.non_aktif)}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            <div class="col-md-4 offset-md-2">
+          <vs-button warn style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/user/download/pdf`)">Download PDF</vs-button>
+          &nbsp;
+          <vs-button success style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/user/download/xlsx`)">Download Excel</vs-button>
+        </div>
+                    </div>
       <el-card v-loading="getLoader">
         <div class="row" style="margin-bottom:20px">
           <div class="col-md-3 offset-md-9">
@@ -21,6 +58,7 @@
           <template #thead>
             <vs-tr>
               <vs-th>Action</vs-th>
+              <vs-th>Aktif</vs-th>
               <vs-th>Name</vs-th>
               <vs-th>NIP</vs-th>
               <vs-th>Email</vs-th>
@@ -29,7 +67,6 @@
               <vs-th>Organisasi Daerah</vs-th>
               <vs-th>Unit Kerja</vs-th>
               <vs-th>No HP/WA</vs-th>
-              <vs-th>Aktif</vs-th>
             </vs-tr>
           </template>
           <template #tbody>
@@ -42,6 +79,10 @@
                 <el-tooltip content="Delete" placement="top-start" effect="dark">
                   <el-button size="mini" type="primary" @click="deleteUser(tr.id)" icon="fa fa-trash"></el-button>
                 </el-tooltip>
+              </vs-td>
+              <vs-td>
+                <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
+                <span class="badge badge-warning" v-else>Non Aktif</span>
               </vs-td>
               <vs-td>
                 {{ tr.nama }}
@@ -67,10 +108,6 @@
               </vs-td>
               <vs-td>
                 {{ tr.no_hp }}
-              </vs-td>
-              <vs-td>
-                <span class="badge badge-success" v-if="tr.aktif">Aktif</span>
-                <span class="badge badge-warning" v-else>Non Aktif</span>
               </vs-td>
             </vs-tr>
           </template>
@@ -232,6 +269,7 @@
       this.$store.dispatch('goverment/getPlains', {
         showall: 0
       });
+      this.$store.dispatch('user/getUserSummary');
     },
     methods: {
       searchData(){
@@ -354,7 +392,8 @@
     computed: {
       ...mapGetters("user", [
         'getUsers',
-        'getLoader'
+        'getLoader',
+        'getSummary'
       ]),
       ...mapGetters("goverment", [
         'getGovermentPlains',

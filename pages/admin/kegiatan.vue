@@ -8,7 +8,14 @@
         </div>
       </div>
     </div>
-    <div class="container-fluid mt--5">
+    <div class="container-fluid mt--7">
+      <div class="row">
+        <div class="col-md-12">
+          <vs-button warn style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/kegiatan/download/pdf`)">Download PDF</vs-button>
+          &nbsp;
+          <vs-button success style="float:right" :loading="globalLoader" gradient @click="downloadFile(`/kegiatan/download/xlsx`)">Download Excel</vs-button>
+        </div>
+      </div>
       <el-card v-loading="getLoader">
         <div class="row" style="margin-bottom:20px">
           <div class="col-md-3 offset-md-9">
@@ -78,40 +85,6 @@
       </a>
     </el-tooltip>
     <!-- End floating button-->
-
-    <!-- <el-dialog :title="titleDialog" :visible.sync="tambahDialog"
-      :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'" @closed="resetForm()">
-      <el-form label-width="auto" ref="form" :model="form" size="mini">
-        <el-form-item label="Judul Kegiatan">
-          <el-input v-model="form.judul"></el-input>
-        </el-form-item>
-        <el-form-item label="Waktu Pelaksanaan">
-          <el-date-picker type="datetimerange" v-model="datePicker" start-placeholder="Mulai" end-placeholder="Selesai"
-            :default-time="['12:00:00']" value-format="yyyy-MM-dd HH:mm:ss">
-          </el-date-picker>
-        </el-form-item>
-        <el-form-item label="Deskripsi">
-          <client-only>
-            <vue-editor v-model="form.deskripsi"></vue-editor>
-          </client-only>
-        </el-form-item>
-        <el-form-item label="Evidence">
-          <el-upload class="upload-demo" drag action="/" :on-change="handleChangeFile">
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-            <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="Aktif">
-          <el-switch v-model="form.aktif"></el-switch>
-        </el-form-item>
-        <el-form-item size="large">
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit('update')" v-if="isUpdate">Update</el-button>
-          <el-button type="primary" :loading="btnLoader" @click="onSubmit" v-else>Simpan</el-button>
-          <el-button @click="tambahDialog = false">Batal</el-button>
-        </el-form-item>
-      </el-form>
-    </el-dialog> -->
 
     <vs-dialog v-model="tambahDialog" :width="$store.state.drawer.mode === 'mobile' ? '80%' : '60%'"
       @close="resetForm()">
@@ -266,9 +239,8 @@
         this.form.id = data.id
         this.form.aktif = data.aktif
         this.form.deskripsi = data.deskripsi
-        this.form.tgl_mulai = new Date(form.tgl_mulai).toISOString().substring(0, 16)
-        // console.log(form.tgl_selesai)
-        this.form.tgl_selesai = new Date(form.tgl_selesai).toISOString().substring(0, 16)
+        this.form.tgl_mulai =  this.$moment(form.tgl_mulai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss'); 
+        this.form.tgl_selesai = this.$moment(form.tgl_selesai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss'); 
 
         data.evidence.forEach((element, index) => {
           this.files.push({
@@ -325,6 +297,7 @@
             })
             this.tambahDialog = false
             this.$store.dispatch('kegiatan/getAll', {});
+            this.resetForm()
           }
         }).finally(() => {
           this.btnLoader = false
