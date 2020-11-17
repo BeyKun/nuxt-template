@@ -83,10 +83,10 @@
             <label>NIP</label>
             <vs-input type="number" v-model="form.nip" placeholder="NIP"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <!-- <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>No HP</label>
             <vs-input type="number" v-model="form.no_hp" placeholder="No HP"></vs-input>
-          </vs-col>
+          </vs-col> -->
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Email</label>
             <vs-input v-model="form.email" placeholder="Email"></vs-input>
@@ -95,22 +95,22 @@
             <label>Jabatan</label>
             <vs-input type="text" v-model="form.jabatan" placeholder="Jabatan"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <!-- <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Pemda Prov/Kab/Kota</label>
             <vs-select filter placeholder="Pemda Prov/Kab/Kota" v-model="form.id_goverment">
               <vs-option v-for="item in getGoverments.data" :key="item.id" :label="item.nama" :value="item.id">
                 {{item.nama}}
               </vs-option>
             </vs-select>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          </vs-col> -->
+          <!-- <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Organisasi</label>
             <vs-input type="text" v-model="form.organisasi" placeholder="Organisasi Daerah"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Unit Kerja</label>
             <vs-input type="text" v-model="form.unit_kerja" placeholder="Unit Kerja"></vs-input>
-          </vs-col>
+          </vs-col> -->
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Password</label>
             <vs-input type="password" v-model="form.password" placeholder="Password"></vs-input>
@@ -159,13 +159,15 @@
         files: [],
         form: {
           email: "",
-          id_goverment: null,
+          // id_goverment: null,
           jabatan: "",
           nama: "",
           nip: "",
-          no_hp: "",
-          organisasi: "",
-          unit_kerja: "",
+          // no_hp: "",
+          // organisasi: "",
+          // unit_kerja: "",
+          password: '',
+          konfirmasi_password: '',
           foto_url: null
         }
       }
@@ -178,6 +180,8 @@
           url: this.form.foto_url
         })
       }
+      this.form.password =  ''
+      this.form.konfirmasi_password =  ''
       this.$store.dispatch('goverment/getAll', {
         showall: 0
       });
@@ -214,16 +218,15 @@
         formData.append('nama', this.form.nama)
         formData.append('email', this.form.email)
         formData.append('jabatan', this.form.jabatan)
-        formData.append('id_goverment', this.form.id_goverment)
-        formData.append('organisasi', this.form.organisasi)
-        formData.append('unit_kerja', this.form.unit_kerja)
+        // formData.append('id_goverment', this.form.id_goverment)
+        // formData.append('organisasi', this.form.organisasi)
+        // formData.append('unit_kerja', this.form.unit_kerja)
         formData.append('nip', this.form.nip)
-        formData.append('no_hp', this.form.no_hp)
+        // formData.append('no_hp', this.form.no_hp)
         if(this.form.password !== ''){
           formData.append('password', this.form.password)
         }
         if (this.form.foto) {
-          console.log(this.form)
           formData.append("foto", this.form.foto)
         }
         this.$axios.post(url, formData).then(resp => {

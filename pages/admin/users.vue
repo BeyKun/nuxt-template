@@ -158,7 +158,7 @@
             <label>Email</label>
             <vs-input v-model="form.email" placeholder="Email"></vs-input>
           </vs-col>
-          <vs-col v-if="form.level == 2" vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Jabatan</label>
             <vs-input type="text" v-model="form.jabatan" placeholder="Jabatan"></vs-input>
           </vs-col>
@@ -409,7 +409,7 @@
             if(val.level == 1){
               this.form.id_goverment = '';
               this.form.unit_kerja = '-'
-              this.form.jabatan = '-'
+              // this.form.jabatan = '-'
               this.form.no_hp = "-"
               this.form.organisasi = "-"
             }
