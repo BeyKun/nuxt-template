@@ -150,7 +150,7 @@
             <label>NIP</label>
             <vs-input type="number" v-model="form.nip" placeholder="NIP"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col v-if="form.level == 2" vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>No HP</label>
             <vs-input type="number" v-model="form.no_hp" placeholder="No HP"></vs-input>
           </vs-col>
@@ -158,11 +158,11 @@
             <label>Email</label>
             <vs-input v-model="form.email" placeholder="Email"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col v-if="form.level == 2" vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Jabatan</label>
             <vs-input type="text" v-model="form.jabatan" placeholder="Jabatan"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col v-if="form.level == 2" vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Pemda Prov/Kab/Kota</label>
             <vs-select filter placeholder="Pemda Prov/Kab/Kota" v-model="form.id_goverment">
               <vs-option v-for="item in getGovermentPlains" :key="item.id" :label="item.nama" :value="item.id">
@@ -170,11 +170,11 @@
               </vs-option>
             </vs-select>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col v-if="form.level == 2" vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Organisasi</label>
             <vs-input type="text" v-model="form.organisasi" placeholder="Organisasi Daerah"></vs-input>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col v-if="form.level == 2" vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Unit Kerja</label>
             <vs-input type="text" v-model="form.unit_kerja" placeholder="Unit Kerja"></vs-input>
           </vs-col>
@@ -255,6 +255,7 @@
           no_hp: "",
           id_goverment: '',
           konfirmasi_password: '',
+          password: '',
           organisasi: "",
           aktif: true,
           level: 2,
@@ -303,8 +304,11 @@
           organisasi: "",
           aktif: true,
           level: 2,
-          foto: null
+          foto: null,
+          konfirmasi_password: '',
+          password: '',
         }
+        this.isUpdate = false
       },
       confirmation(type) {
         if (this.form.konfirmasi_password == this.form.password) {
@@ -400,16 +404,17 @@
       ])
     },
     watch: {
-      getUsers(newValue, oldValue) {
-
-      },
-      getGovermentPlains(newValue) {
-        // console.log(newValue)
-      },
-      search(newValue, oldValue) {
-        // this.$store.dispatch('user/getAll', {
-        //   search: newValue
-        // });
+      form: {
+          handler(val){
+            if(val.level == 1){
+              this.form.id_goverment = '';
+              this.form.unit_kerja = '-'
+              this.form.jabatan = '-'
+              this.form.no_hp = "-"
+              this.form.organisasi = "-"
+            }
+          },
+          deep: true
       },
       page(newValue, oldValue) {
         this.$store.commit('user/setPage', newValue)

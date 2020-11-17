@@ -70,7 +70,7 @@
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
             <label>Foto</label>
-            <el-upload action="/" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
+            <el-upload :action="api_url + '/fake-upload'" :on-change="handleChangeFile" list-type="picture-card" accept="image/*"
             :file-list="files" :limit="1">
             <i class="el-icon-plus"></i>
             </el-upload>
@@ -144,10 +144,16 @@
     mapMutations,
     mapGetters
   } from 'vuex';
+
+  import {
+    config
+  } from '../global.config'
+
   export default {
     layout: 'admin',
     data() {
       return {
+        api_url: config.baseApiUrl,
         tambahDialog: false,
         btnLoader: false,
         files: [],
@@ -213,6 +219,9 @@
         formData.append('unit_kerja', this.form.unit_kerja)
         formData.append('nip', this.form.nip)
         formData.append('no_hp', this.form.no_hp)
+        if(this.form.password !== ''){
+          formData.append('password', this.form.password)
+        }
         if (this.form.foto) {
           console.log(this.form)
           formData.append("foto", this.form.foto)
