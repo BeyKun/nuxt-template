@@ -3,98 +3,84 @@
     "name": "login",
     "path": "/login",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\login.vue",
-    "chunkName": "pages/login",
-    "_name": "_5d93439a"
+    "chunkName": "pages/login"
   },
   {
     "name": "profile",
     "path": "/profile",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\profile.vue",
-    "chunkName": "pages/profile",
-    "_name": "_584473f3"
+    "chunkName": "pages/profile"
   },
   {
     "name": "register",
     "path": "/register",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\register.vue",
-    "chunkName": "pages/register",
-    "_name": "_042d29c9"
+    "chunkName": "pages/register"
   },
   {
     "name": "reset-password",
     "path": "/reset-password",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\reset-password.vue",
-    "chunkName": "pages/reset-password",
-    "_name": "_1a1fd202"
+    "chunkName": "pages/reset-password"
   },
   {
     "name": "admin-beranda",
     "path": "/admin/beranda",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\admin\\\\beranda.vue",
-    "chunkName": "pages/admin/beranda",
-    "_name": "_01e115b0"
+    "chunkName": "pages/admin/beranda"
   },
   {
     "name": "admin-berita",
     "path": "/admin/berita",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\admin\\\\berita.vue",
-    "chunkName": "pages/admin/berita",
-    "_name": "_8cffc880"
+    "chunkName": "pages/admin/berita"
   },
   {
     "name": "admin-informasi",
     "path": "/admin/informasi",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\admin\\\\informasi.vue",
-    "chunkName": "pages/admin/informasi",
-    "_name": "_b2148136"
+    "chunkName": "pages/admin/informasi"
   },
   {
     "name": "admin-kegiatan",
     "path": "/admin/kegiatan",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\admin\\\\kegiatan.vue",
-    "chunkName": "pages/admin/kegiatan",
-    "_name": "_a454b696"
+    "chunkName": "pages/admin/kegiatan"
   },
   {
     "name": "admin-lapor",
     "path": "/admin/lapor",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\admin\\\\lapor\\\\index.vue",
-    "chunkName": "pages/admin/lapor/index",
-    "_name": "_523afca6"
+    "chunkName": "pages/admin/lapor/index"
   },
   {
     "name": "admin-users",
     "path": "/admin/users",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\admin\\\\users.vue",
-    "chunkName": "pages/admin/users",
-    "_name": "_28c6bd02"
+    "chunkName": "pages/admin/users"
   },
   {
     "name": "admin-lapor-detail",
     "path": "/admin/lapor/detail",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\admin\\\\lapor\\\\detail.vue",
-    "chunkName": "pages/admin/lapor/detail",
-    "_name": "_c47e78f4"
+    "chunkName": "pages/admin/lapor/detail"
   },
   {
     "name": "admin-master-pemda",
     "path": "/admin/master/pemda",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\admin\\\\master\\\\pemda.vue",
-    "chunkName": "pages/admin/master/pemda",
-    "_name": "_0a09d66a"
+    "chunkName": "pages/admin/master/pemda"
   },
   {
     "name": "admin-master-setting",
     "path": "/admin/master/setting",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\admin\\\\master\\\\setting.vue",
-    "chunkName": "pages/admin/master/setting",
-    "_name": "_0d027c65"
+    "chunkName": "pages/admin/master/setting"
   },
   {
     "name": "index",
     "path": "/",
     "component": "C:\\\\laragon\\\\www\\\\simpulkendali2\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_078ebb1c"
+    "chunkName": "pages/index"
   }
 ]

@@ -12,7 +12,7 @@ export const  menu = () => {
             route: '/admin/lapor'
         },
         {
-            text: 'Kagiatan',
+            text: 'Kegiatan',
             icon: 'el-icon-baseball text-primary',
             route: '/admin/kegiatan'
         },
@@ -23,7 +23,7 @@ export const  menu = () => {
         },
         {
             text: 'Informasi',
-            icon: 'el-icon-info text-primary',
+            icon: 'el-icon-warning-outline text-primary',
             route: '/admin/informasi'
         },
         {

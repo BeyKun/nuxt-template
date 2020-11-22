@@ -107,11 +107,11 @@
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Tanggal Mulai</label>
-            <vs-input type="datetime-local" v-model="form.tgl_mulai"></vs-input>
+            <vs-input type="date" v-model="form.tgl_mulai"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Tanggal Selesai</label>
-            <vs-input type="datetime-local" v-model="form.tgl_selesai"></vs-input>
+            <vs-input type="date" v-model="form.tgl_selesai"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="12" style="padding:5px">
             <label>Evidence</label>
@@ -239,8 +239,8 @@
         this.form.id = data.id
         this.form.aktif = data.aktif
         this.form.deskripsi = data.deskripsi
-        this.form.tgl_mulai =  this.$moment(form.tgl_mulai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss'); 
-        this.form.tgl_selesai = this.$moment(form.tgl_selesai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss'); 
+        this.form.tgl_mulai =  this.$moment(form.tgl_mulai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DD'); 
+        this.form.tgl_selesai = this.$moment(form.tgl_selesai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DD'); 
 
         data.evidence.forEach((element, index) => {
           this.files.push({

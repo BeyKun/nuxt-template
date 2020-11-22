@@ -146,11 +146,11 @@
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Tanggal Mulai</label>
-            <vs-input type="datetime-local" v-model="form.tgl_mulai"></vs-input>
+            <vs-input type="date" v-model="form.tgl_mulai"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Tanggal Selesai</label>
-            <vs-input type="datetime-local" v-model="form.tgl_selesai"></vs-input>
+            <vs-input type="date" v-model="form.tgl_selesai"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
             <label>Tautan</label>
@@ -312,8 +312,9 @@
         this.tambahDialog = true
         this.titleDialog = 'Edit Laporan'
         this.isUpdate = true
-        form.tgl_mulai =  this.$moment(form.tgl_mulai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss'); 
-        form.tgl_selesai = this.$moment(form.tgl_selesai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DDTHH:mm:ss'); 
+
+        form.tgl_mulai =  this.$moment(form.tgl_mulai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DD'); 
+        form.tgl_selesai = this.$moment(form.tgl_selesai, 'DD-MM-YYYY hh:mm:ss').format('YYYY-MM-DD'); 
         // form.kandungan_pancasila = form.kandungan_pancasila.split(',')
         this.form = form
       },

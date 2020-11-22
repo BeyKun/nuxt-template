@@ -187,7 +187,7 @@
             <vs-input type="password" v-model="form.konfirmasi_password" placeholder="Konfirmasi Password"></vs-input>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
-            <label>Level</label>
+            <label>User Level</label>
             <vs-select placeholder="Level" v-model="form.level">
               <vs-option value="1" label="1">1</vs-option>
               <vs-option value="2" label="2">2</vs-option>
