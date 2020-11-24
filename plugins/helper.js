@@ -70,7 +70,7 @@ Vue.mixin({
         return str;
       }
     },
-    downloadFile(url) {
+    downloadFile(url, debug = false) {
       this.globalLoader = true
       this.$axios.get(url, {
           responseType: 'arraybuffer',
@@ -87,7 +87,11 @@ Vue.mixin({
           document.body.appendChild(link);
           link.click();
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+          if(debug){
+            this.$notify.error({title: 'Gagal Mendownload', message: 'File Tidak Tersedia'})
+          }
+        })
         .finally(()=>{
           this.globalLoader = false
         });

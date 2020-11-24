@@ -118,7 +118,7 @@
             <div class="row">
               <div class="col-md-12">
                 <button class="btn btn-primary btn-sm"
-                  @click="downloadFile(`lapor/${getLaporan.id}/evidence/download`)">Download Evidence</button>
+                  @click="downloadFile(`lapor/${getLaporan.id}/evidence/download`, true)">Download Evidence</button>
               </div>
               <div class="col-md-12" style="margin-top:20px">
                 <el-upload :action="api_url + `/lapor/${getLaporan.id}/evidence/store`" :headers="headers"

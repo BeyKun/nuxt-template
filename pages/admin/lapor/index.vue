@@ -91,7 +91,7 @@
               </vs-td>
               <vs-td>
                 <el-tooltip content="Download Evidence" placement="top-start" effect="dark">
-                  <el-button size="mini" @click="downloadFile(`lapor/${tr.id}/evidence/download`)" icon="fa fa-download"></el-button>
+                  <el-button size="mini" @click="downloadFile(`lapor/${tr.id}/evidence/download`, true)" icon="fa fa-download"></el-button>
                 </el-tooltip>
 
                 <el-tooltip content="Edit" placement="top-start" effect="dark">
@@ -188,7 +188,7 @@
               </vs-option>
             </vs-select>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6" style="padding:5px">
+          <vs-col w="12" style="padding:5px">
             <label>Kandungan Nilai Pancasila</label>
             <vs-select filter multiple placeholder="Kategori Kegiatan" v-model="form.kandungan_pancasila">
               <vs-option label="KETUHANAN YANG MAHA ESA" :value="1">

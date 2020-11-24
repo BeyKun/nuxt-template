@@ -4564,7 +4564,7 @@ external_vue_default.a.mixin({
       }
     },
 
-    downloadFile(url) {
+    downloadFile(url, debug = false) {
       this.globalLoader = true;
       this.$axios.get(url, {
         responseType: 'arraybuffer',
@@ -4580,7 +4580,14 @@ external_vue_default.a.mixin({
 
         document.body.appendChild(link);
         link.click();
-      }).catch(error => console.log(error)).finally(() => {
+      }).catch(error => {
+        if (debug) {
+          this.$notify.error({
+            title: 'Gagal Mendownload',
+            message: 'File Tidak Tersedia'
+          });
+        }
+      }).finally(() => {
         this.globalLoader = false;
       });
     }
