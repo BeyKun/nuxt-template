@@ -40,7 +40,7 @@
                     <vs-td><b>No HP</b></vs-td>
                     <vs-td>{{ form.no_hp }}</vs-td>
                   </vs-tr>
-                  <vs-tr>
+                  <!-- <vs-tr>
                     <vs-td><b>Pemda Prov / Kab / Kota</b></vs-td>
                     <vs-td>{{ form.goverment ? form.goverment.nama : '-' }}</vs-td>
                   </vs-tr>
@@ -51,7 +51,7 @@
                   <vs-tr>
                     <vs-td><b>Organisasi</b></vs-td>
                     <vs-td>{{ form.unit_kerja}}</vs-td>
-                  </vs-tr>
+                  </vs-tr> -->
                 </template>
               </vs-table>
             </div>
