@@ -105,6 +105,11 @@ export default {
     ],
   },
 
+  router: {
+    // middleware: 'auth',
+    base: config.base
+  },
+
   loaders: {
 
     // ...
@@ -134,7 +139,7 @@ export default {
       'X-Requested-With':'XMLHttpRequest'
     }
   },
-  
+
   auth: {
     busy:false,
     loggedIn:true,

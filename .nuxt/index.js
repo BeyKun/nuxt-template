@@ -13,17 +13,17 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_plugin_8458bffa from 'nuxt_plugin_plugin_8458bffa' // Source: .\\components\\plugin.js (mode: 'all')
-import nuxt_plugin_moment_0c32e5b2 from 'nuxt_plugin_moment_0c32e5b2' // Source: .\\moment.js (mode: 'all')
-import nuxt_plugin_axios_d6de7eb4 from 'nuxt_plugin_axios_d6de7eb4' // Source: .\\axios.js (mode: 'all')
-import nuxt_plugin_templatesplugin3065ebce_76a8990a from 'nuxt_plugin_templatesplugin3065ebce_76a8990a' // Source: .\\templates.plugin.3065ebce.js (mode: 'all')
+import nuxt_plugin_plugin_ccf032f4 from 'nuxt_plugin_plugin_ccf032f4' // Source: .\\components\\plugin.js (mode: 'all')
+import nuxt_plugin_moment_0709930f from 'nuxt_plugin_moment_0709930f' // Source: .\\moment.js (mode: 'all')
+import nuxt_plugin_axios_849f18ae from 'nuxt_plugin_axios_849f18ae' // Source: .\\axios.js (mode: 'all')
+import nuxt_plugin_templatesplugin77c0b336_5a551018 from 'nuxt_plugin_templatesplugin77c0b336_5a551018' // Source: .\\templates.plugin.77c0b336.js (mode: 'all')
 import nuxt_plugin_helper_0bc87e87 from 'nuxt_plugin_helper_0bc87e87' // Source: ..\\plugins\\helper (mode: 'all')
 import nuxt_plugin_vuesax_248aab7d from 'nuxt_plugin_vuesax_248aab7d' // Source: ..\\plugins\\vuesax (mode: 'all')
 import nuxt_plugin_extablecolumn_82eb25d0 from 'nuxt_plugin_extablecolumn_82eb25d0' // Source: ..\\plugins\\extablecolumn (mode: 'all')
 import nuxt_plugin_swal_d9d73ab0 from 'nuxt_plugin_swal_d9d73ab0' // Source: ..\\plugins\\swal (mode: 'client')
 import nuxt_plugin_vue2editor_50d6bb9c from 'nuxt_plugin_vue2editor_50d6bb9c' // Source: ..\\plugins\\vue2editor (mode: 'client')
 import nuxt_plugin_chart_223dba6a from 'nuxt_plugin_chart_223dba6a' // Source: ..\\plugins\\chart (mode: 'client')
-import nuxt_plugin_plugin_e109c856 from 'nuxt_plugin_plugin_e109c856' // Source: .\\auth\\plugin.js (mode: 'all')
+import nuxt_plugin_plugin_81097ed0 from 'nuxt_plugin_plugin_81097ed0' // Source: .\\auth\\plugin.js (mode: 'all')
 
 // Component: <ClientOnly>
 Vue.component(ClientOnly.name, ClientOnly)
@@ -49,6 +49,13 @@ Vue.component('NChild', NuxtChild)
 
 // Component: <Nuxt>
 Vue.component(Nuxt.name, Nuxt)
+
+Object.defineProperty(Vue.prototype, '$nuxt', {
+  get() {
+    return this.$root.$options.$nuxt
+  },
+  configurable: true
+})
 
 Vue.use(Meta, {"keyName":"head","attribute":"data-n-head","ssrAttribute":"data-n-head-ssr","tagIDKeyName":"hid"})
 
@@ -76,7 +83,7 @@ async function createApp(ssrContext, config = {}) {
   // here we inject the router and store to all child components,
   // making them available everywhere as `this.$router` and `this.$store`.
   const app = {
-    head: {"title":"SIMPUL KENDALI - BPIP","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""}],"link":[{"rel":"stylesheet","href":"\u002Fassets\u002Fvendor\u002Felement-ui\u002Findex.css"},{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Flogo-simpulkendali.png"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Ficon?family=Material+Icons"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap"},{"rel":"stylesheet","href":"https:\u002F\u002Fmaxst.icons8.com\u002Fvue-static\u002Flandings\u002Fline-awesome\u002Fline-awesome\u002F1.3.0\u002Fcss\u002Fline-awesome.min.css"}],"script":[{"src":"\u002Fassets\u002Fvendor\u002Fjquery\u002Fdist\u002Fjquery.min.js"},{"src":"\u002Fassets\u002Fvendor\u002Fbootstrap\u002Fdist\u002Fjs\u002Fbootstrap.bundle.min.js"},{"src":"\u002Fassets\u002Fvendor\u002Fjs-cookie\u002Fjs.cookie.js"},{"src":"\u002Fassets\u002Fvendor\u002Fjquery.scrollbar\u002Fjquery.scrollbar.min.js"},{"src":"\u002Fassets\u002Fvendor\u002Fjquery-scroll-lock\u002Fdist\u002Fjquery-scrollLock.min.js"},{"src":"\u002Fassets\u002Fvendor\u002Fchart.js\u002Fdist\u002FChart.min.js"},{"src":"\u002Fassets\u002Fvendor\u002Fchart.js\u002Fdist\u002FChart.extension.js"},{"src":"\u002Fassets\u002Fjs\u002Fargon.min001.js"}],"style":[]},
+    head: {"title":"SIMPUL KENDALI - BPIP","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":""}],"link":[{"rel":"stylesheet","href":"\u002Fsimpulkendali\u002Fassets\u002Fvendor\u002Felement-ui\u002Findex.css"},{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Flogo-simpulkendali.png"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Ficon?family=Material+Icons"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Fcss?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i&display=swap"},{"rel":"stylesheet","href":"https:\u002F\u002Fmaxst.icons8.com\u002Fvue-static\u002Flandings\u002Fline-awesome\u002Fline-awesome\u002F1.3.0\u002Fcss\u002Fline-awesome.min.css"}],"script":[{"src":"\u002Fsimpulkendali\u002Fassets\u002Fvendor\u002Fjquery\u002Fdist\u002Fjquery.min.js"},{"src":"\u002Fsimpulkendali\u002Fassets\u002Fvendor\u002Fbootstrap\u002Fdist\u002Fjs\u002Fbootstrap.bundle.min.js"},{"src":"\u002Fsimpulkendali\u002Fassets\u002Fvendor\u002Fjs-cookie\u002Fjs.cookie.js"},{"src":"\u002Fsimpulkendali\u002Fassets\u002Fvendor\u002Fjquery.scrollbar\u002Fjquery.scrollbar.min.js"},{"src":"\u002Fsimpulkendali\u002Fassets\u002Fvendor\u002Fjquery-scroll-lock\u002Fdist\u002Fjquery-scrollLock.min.js"},{"src":"\u002Fsimpulkendali\u002Fassets\u002Fvendor\u002Fchart.js\u002Fdist\u002FChart.min.js"},{"src":"\u002Fsimpulkendali\u002Fassets\u002Fvendor\u002Fchart.js\u002Fdist\u002FChart.extension.js"},{"src":"\u002Fsimpulkendali\u002Fassets\u002Fjs\u002Fargon.min001.js"}],"style":[]},
 
     store,
     router,
@@ -205,20 +212,20 @@ async function createApp(ssrContext, config = {}) {
   }
   // Plugin execution
 
-  if (typeof nuxt_plugin_plugin_8458bffa === 'function') {
-    await nuxt_plugin_plugin_8458bffa(app.context, inject)
+  if (typeof nuxt_plugin_plugin_ccf032f4 === 'function') {
+    await nuxt_plugin_plugin_ccf032f4(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_moment_0c32e5b2 === 'function') {
-    await nuxt_plugin_moment_0c32e5b2(app.context, inject)
+  if (typeof nuxt_plugin_moment_0709930f === 'function') {
+    await nuxt_plugin_moment_0709930f(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_axios_d6de7eb4 === 'function') {
-    await nuxt_plugin_axios_d6de7eb4(app.context, inject)
+  if (typeof nuxt_plugin_axios_849f18ae === 'function') {
+    await nuxt_plugin_axios_849f18ae(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_templatesplugin3065ebce_76a8990a === 'function') {
-    await nuxt_plugin_templatesplugin3065ebce_76a8990a(app.context, inject)
+  if (typeof nuxt_plugin_templatesplugin77c0b336_5a551018 === 'function') {
+    await nuxt_plugin_templatesplugin77c0b336_5a551018(app.context, inject)
   }
 
   if (typeof nuxt_plugin_helper_0bc87e87 === 'function') {
@@ -245,8 +252,8 @@ async function createApp(ssrContext, config = {}) {
     await nuxt_plugin_chart_223dba6a(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_plugin_e109c856 === 'function') {
-    await nuxt_plugin_plugin_e109c856(app.context, inject)
+  if (typeof nuxt_plugin_plugin_81097ed0 === 'function') {
+    await nuxt_plugin_plugin_81097ed0(app.context, inject)
   }
 
   // Lock enablePreview in context

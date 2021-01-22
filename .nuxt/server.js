@@ -1,5 +1,6 @@
 import { stringify } from 'querystring'
 import Vue from 'vue'
+import { normalizeURL } from '@nuxt/ufo'
 import fetch from 'node-fetch'
 import middleware from './middleware.js'
 import {
@@ -43,17 +44,17 @@ const createNext = ssrContext => (opts) => {
   }
   opts.query = stringify(opts.query)
   opts.path = opts.path + (opts.query ? '?' + opts.query : '')
-  const routerBase = '/'
+  const routerBase = '/simpulkendali/'
   if (!opts.path.startsWith('http') && (routerBase !== '/' && !opts.path.startsWith(routerBase))) {
     opts.path = urlJoin(routerBase, opts.path)
   }
   // Avoid loop redirect
-  if (opts.path === ssrContext.url) {
+  if (decodeURI(opts.path) === decodeURI(ssrContext.url)) {
     ssrContext.redirected = false
     return
   }
   ssrContext.res.writeHead(opts.status, {
-    Location: opts.path
+    Location: normalizeURL(opts.path)
   })
   ssrContext.res.end()
 }

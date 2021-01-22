@@ -1,6 +1,6 @@
 
 const config = {
-    base: '/',
+    base: '/simpulkendali/',
     baseUrl: 'http://simpulkendali-api.ckmindramayu.com',
     baseApiUrl : 'http://simpulkendali-api.ckmindramayu.com'
 
