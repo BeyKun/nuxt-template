@@ -148,8 +148,8 @@ export default (ctx, inject) => {
   const runtimeConfig = ctx.$config && ctx.$config.axios || {}
   // baseURL
   const baseURL = process.browser
-    ? (runtimeConfig.browserBaseURL || runtimeConfig.baseURL || 'http://simpulkendali-api.ckmindramayu.com')
-      : (runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://simpulkendali-api.ckmindramayu.com')
+    ? (runtimeConfig.browserBaseURL || runtimeConfig.baseURL || 'http://223.27.146.172/simpulkendali-api')
+      : (runtimeConfig.baseURL || process.env._AXIOS_BASE_URL_ || 'http://223.27.146.172/simpulkendali-api')
 
   // Create fresh objects for all default header scopes
   // Axios creates only one which is shared across SSR requests!
