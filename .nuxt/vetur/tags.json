@@ -1,0 +1,38 @@
+{
+  "Logo": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/Logo.vue"
+  },
+  "LazyLogo": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/Logo.vue"
+  },
+  "Menu": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/Menu.js"
+  },
+  "LazyMenu": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/Menu.js"
+  },
+  "Sidebar": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/Sidebar.vue"
+  },
+  "LazySidebar": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/Sidebar.vue"
+  },
+  "ChartBar": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/chart/chart-bar.vue"
+  },
+  "LazyChartBar": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/chart/chart-bar.vue"
+  },
+  "ChartDoughnut": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/chart/chart-doughnut.vue"
+  },
+  "LazyChartDoughnut": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/chart/chart-doughnut.vue"
+  },
+  "ChartLine": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/chart/chart-line.vue"
+  },
+  "LazyChartLine": {
+    "description": "Auto imported from C:/laragon/www/simpul-kendali/components/chart/chart-line.vue"
+  }
+}
